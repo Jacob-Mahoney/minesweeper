@@ -16,7 +16,7 @@ public class main {
 
         } */
         ArrayList<ArrayList<Integer>> grid = new ArrayList<ArrayList<Integer>>();
-
+        ArrayList<Integer> firstRow = grid.get(0); //gets first row of grid
         int x = 9; // dummy variable dependent on user input for size selection (width)
         int y = 9; // dummy variable dependent on user input for size selection (height)
         int mines = 10;
