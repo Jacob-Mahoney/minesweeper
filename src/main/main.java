@@ -32,7 +32,7 @@ public class main {
         Square firstSquare = firstRow.get(0);
         Square secondSquare = squares.get(1).get(1);
         firstRow.set(5, new Square());
-         */
+         a*/
     }
 
 
