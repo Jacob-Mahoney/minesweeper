@@ -1,7 +1,7 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.List;
+
 public class main {
 
     public static void main(String args[]) {
@@ -13,7 +13,6 @@ public class main {
             arr[i] = random;
             System.out.println(arr[i]);
             i++;
-
         } */
         //ArrayList<ArrayList<Integer>> grid = new ArrayList<ArrayList<Integer>>();
         //ArrayList<Integer> firstRow = grid.get(0); //gets first row of grid
