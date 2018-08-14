@@ -3,10 +3,8 @@ package main;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 // first frame that is shown on start
 public class Window extends JFrame {
@@ -18,8 +16,7 @@ public class Window extends JFrame {
     private JPanel grid;
     private JLabel timer;
 
-
-    public Window() {
+    public Window(ArrayList<ArrayList<Square>> squares) {
         super("Poop");
         initComponents();
         setResizable(false);
@@ -40,14 +37,14 @@ public class Window extends JFrame {
         rentedCarsButton.setText("Rented Cars");
 
 
-        GridLayout test = new GridLayout(9,9);
+        GridLayout gridLayout = new GridLayout(9,9);
 
         ImageIcon squareIcon = getImageIconFromResource("resources/square.jpg");
         ImageIcon squareIconHovered = getImageIconFromResource("resources/square-hovered.jpg");
 
-        grid.setLayout(test);
-        test.setHgap(2);
-        test.setVgap(2);
+        grid.setLayout(gridLayout);
+        gridLayout.setHgap(2);
+        gridLayout.setVgap(2);
         grid.setBackground(Color.WHITE);
         for (int i = 0; i < 81; i++) {
 
