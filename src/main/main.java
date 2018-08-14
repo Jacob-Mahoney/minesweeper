@@ -6,26 +6,25 @@ public class main {
 
     public static void main(String args[]) {
 
-      /*  int arr[] = {0,0,0,0,0,0,0,0,0,0};
-        int i = 0;
-        while (i<10){
-            int random = (int )(Math.random() * 81 + 1); //random number between 1 and 81
-            arr[i] = random;
-            System.out.println(arr[i]);
-            i++;
-        } */
-        //ArrayList<ArrayList<Integer>> grid = new ArrayList<ArrayList<Integer>>();
         //ArrayList<Integer> firstRow = grid.get(0); //gets first row of grid
+        //Window window = new Window();
+        ArrayList<ArrayList<Square>> square = new ArrayList<ArrayList<Square>>();
         ArrayList<Integer> firstRow = new ArrayList<Integer>();
         int x = 9; // dummy variable dependent on user input for size selection (width)
         int y = 9; // dummy variable dependent on user input for size selection (height)
+        int remainder;
+        int quotient;
         int mines = 10;
-        while (mines>0) {
+        for (int i = 0; i < mines; i++)
+        {
             int random = (int )(Math.random() * (x) * (y) + 1); //random number between 1 and 81
-            System.out.println(random);
-            firstRow.add(random);
-            System.out.println(firstRow);
-            mines--;
+            quotient = random/x;
+            remainder = random%x;
+            //System.out.println(random + " " + quotient + " " + remainder);
+            square.get(quotient).set(remainder, new Square(remainder, quotient, true));
+            //square.set(z, new Square(x, true));
+            //firstRow.add(random);
+            //System.out.println(firstRow);
         }
 
         /*ArrayList<ArrayList<Square>> squares = new ArrayList<ArrayList<Square>>();
