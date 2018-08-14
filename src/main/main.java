@@ -5,7 +5,11 @@ import java.util.ArrayList;
 public class main {
 
     public static void main(String args[]) {
-
+		
+		GameGrid grid = new GameGrid(9, 9);
+        Square blah = grid.getSquareByLocation(4, 5);
+        System.out.println(blah.getX() + "," + blah.getY());
+		
         //ArrayList<Integer> firstRow = grid.get(0); //gets first row of grid
         //Window window = new Window();
         ArrayList<ArrayList<Square>> square = new ArrayList<ArrayList<Square>>();
@@ -33,6 +37,5 @@ public class main {
         Square secondSquare = squares.get(1).get(1);
         firstRow.set(5, new Square()); */
     }
-
 
 }
