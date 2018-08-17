@@ -17,4 +17,6 @@ public class Square {
 
     boolean hasMine() { return hasMine; }
 
+    void setHasMine(boolean hasMine) {this.hasMine=hasMine;}
+
 }
