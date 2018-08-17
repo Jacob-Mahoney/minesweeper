@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 // first frame that is shown on start
 public class Window extends JFrame {
@@ -16,7 +15,7 @@ public class Window extends JFrame {
     private JPanel grid;
     private JLabel timer;
 
-    public Window(ArrayList<ArrayList<Square>> squares) {
+    public Window() {
         super("Poop");
         initComponents();
         setResizable(false);
@@ -39,8 +38,8 @@ public class Window extends JFrame {
 
         GridLayout gridLayout = new GridLayout(9,9);
 
-        ImageIcon squareIcon = getImageIconFromResource("resources/square.jpg");
-        ImageIcon squareIconHovered = getImageIconFromResource("resources/square-hovered.jpg");
+        ImageIcon squareIcon = getImageIconFromResource("../resources/square.jpg");
+        ImageIcon squareIconHovered = getImageIconFromResource("../resources/square-hovered.jpg");
 
         grid.setLayout(gridLayout);
         gridLayout.setHgap(2);

@@ -6,11 +6,12 @@ public class main {
 
     public static void main(String args[]) {
 
-        //Window window = new Window();
+        Window window = new Window();
 
-        GameGrid grid = new GameGrid(9, 9);
-        Square blah = grid.getSquareByLocation(4, 5);
-        System.out.println(blah.getX() + "," + blah.getY());
+        //GameGrid grid = new GameGrid(9, 9, 10);
+        //grid.output();
+        //Square blah = grid.getSquareByLocation(4, 5);
+        //System.out.println(blah.getX() + "," + blah.getY());
 
         /*ArrayList<ArrayList<Square>> squares = new ArrayList<ArrayList<Square>>();
         ArrayList<Integer> firstRow = new ArrayList<Integer>();
