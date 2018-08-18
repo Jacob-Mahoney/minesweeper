@@ -6,7 +6,7 @@ public class main {
 
     public static void main(String args[]) {
 
-        Window window = new Window();
+        Window window = new Window(new GameGrid(9, 9, 10));
 
         //GameGrid grid = new GameGrid(9, 9, 10);
         //grid.output();

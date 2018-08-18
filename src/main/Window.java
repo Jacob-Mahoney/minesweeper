@@ -8,15 +8,13 @@ import java.awt.event.*;
 // first frame that is shown on start
 public class Window extends JFrame {
 
-    private JTextField searchBox;
-    private JButton searchButton;
-    private JButton rentCarButton;
-    private JButton rentedCarsButton;
     private JPanel grid;
     private JLabel timer;
+    private GameGrid gameGrid;
 
-    public Window() {
+    public Window(GameGrid gameGrid) {
         super("Poop");
+        this.gameGrid = gameGrid;
         initComponents();
         setResizable(false);
         setVisible(true);
@@ -24,17 +22,8 @@ public class Window extends JFrame {
 
     private void initComponents() {
 
-        searchBox = new JTextField();
-        searchButton = new JButton();
-        rentCarButton = new JButton();
-        rentedCarsButton = new JButton();
         grid = new JPanel();
         timer = new JLabel("timer");
-
-        searchButton.setText("Search");
-        rentCarButton.setText("Rent Car");
-        rentedCarsButton.setText("Rented Cars");
-
 
         GridLayout gridLayout = new GridLayout(9,9);
 
