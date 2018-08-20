@@ -6,13 +6,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 // first frame that is shown on start
-public class Window extends JFrame {
+public class GameWindow extends JFrame {
 
     private JPanel grid;
     private JLabel timer;
     private GameGrid gameGrid;
 
-    public Window(GameGrid gameGrid) {
+    public GameWindow(GameGrid gameGrid) {
         super("Poop");
         this.gameGrid = gameGrid;
         initComponents();
@@ -56,6 +56,8 @@ public class Window extends JFrame {
                         button.setIcon(squareIcon);
                     }
                 });
+
+                button.addActionListener(this::onButtonClick);
 
             }
 
@@ -103,6 +105,14 @@ public class Window extends JFrame {
             System.out.println(ex);
         }
         return null;
+    }
+
+    private void onButtonClick(ActionEvent e) {
+        Object obj = e.getSource();
+        if (obj instanceof JButton) {
+            JButton button = (JButton) obj;
+            System.out.print(button.getWidth());
+        }
     }
 
 }

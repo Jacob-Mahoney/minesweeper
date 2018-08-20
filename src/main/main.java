@@ -1,12 +1,10 @@
 package main;
 
-import java.util.ArrayList;
-
 public class main {
 
     public static void main(String args[]) {
 
-        Window window = new Window(new GameGrid(9, 9, 10));
+        GameWindow window = new GameWindow(new GameGrid(9, 9, 10));
 
         //GameGrid grid = new GameGrid(9, 9, 10);
         //grid.output();
