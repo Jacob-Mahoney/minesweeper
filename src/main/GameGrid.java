@@ -25,11 +25,19 @@ public class GameGrid {
         }
         int quotient;
         int remainder;
+        int count = 0;
+        //ArrayList<Integer> random_numbers;
+        int[] random_numbers = {0};
         ArrayList<ArrayList<Square>> square = new ArrayList<ArrayList<Square>>();
         for (int k = 0; k < this.numberofmines; k++) {
-            int random = (int )(Math.random() * (this.height) * (this.width)); //random number between 1 and 81
+            int random = (int )(Math.random() * (this.height) * (this.width));
             quotient = random/this.height;
             remainder = random%this.height;
+            while (grid.get(quotient).get(remainder).hasMine() == true) {
+                random = (int )(Math.random() * (this.height) * (this.width));
+                quotient = random/this.height;
+                remainder = random%this.height;
+            }
             grid.get(quotient).set(remainder, new Square(quotient, remainder, true));
             System.out.println(random);
         }
