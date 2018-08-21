@@ -1,6 +1,5 @@
 package main;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,39 +26,33 @@ public class GameWindow extends JFrame {
 
         GridLayout gridLayout = new GridLayout(9,9);
 
-        ImageIcon squareIcon = getImageIconFromResource("../resources/square.jpg");
-        ImageIcon squareIconHovered = getImageIconFromResource("../resources/square-hovered.jpg");
-
         grid.setLayout(gridLayout);
         gridLayout.setHgap(2);
         gridLayout.setVgap(2);
         grid.setBackground(Color.WHITE);
+
         for (int i = 0; i < 81; i++) {
 
             JButton button = new JButton();
 
-            if (squareIcon != null && squareIconHovered != null) {
+            button.setIcon(ResourceHandler.squareIcon);
+            button.setOpaque(false);
+            button.setContentAreaFilled(false);
+            button.setBorderPainted(false);
+            button.setFocusPainted(false);
 
-                button.setIcon(squareIcon);
-                button.setOpaque(false);
-                button.setContentAreaFilled(false);
-                button.setBorderPainted(false);
-                button.setFocusPainted(false);
+            button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    onButtonHoverOver(e);
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    onButtonHoverOut(e);
+                }
+            });
 
-                button.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        button.setIcon(squareIconHovered);
-                    }
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        button.setIcon(squareIcon);
-                    }
-                });
-
-                button.addActionListener(this::onButtonClick);
-
-            }
+            button.addActionListener(this::onButtonClick);
 
             button.setMinimumSize(new Dimension(24, 24));
             button.setPreferredSize(new Dimension(24, 24));
@@ -97,21 +90,27 @@ public class GameWindow extends JFrame {
 
     }
 
-    ImageIcon getImageIconFromResource(String resource) {
-        try {
-            Image image = ImageIO.read(getClass().getResource(resource));
-            return new ImageIcon(image);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return null;
-    }
-
     private void onButtonClick(ActionEvent e) {
         Object obj = e.getSource();
         if (obj instanceof JButton) {
             JButton button = (JButton) obj;
-            System.out.print(button.getWidth());
+            System.out.println("button click!");
+        }
+    }
+
+    private void onButtonHoverOver(MouseEvent e) {
+        Object obj = e.getSource();
+        if (obj instanceof JButton) {
+            JButton button = (JButton) obj;
+            button.setIcon(ResourceHandler.squareIconHovered);
+        }
+    }
+
+    private void onButtonHoverOut(MouseEvent e) {
+        Object obj = e.getSource();
+        if (obj instanceof JButton) {
+            JButton button = (JButton) obj;
+            button.setIcon(ResourceHandler.squareIcon);
         }
     }
 

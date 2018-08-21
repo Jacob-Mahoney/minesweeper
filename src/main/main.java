@@ -4,7 +4,11 @@ public class main {
 
     public static void main(String args[]) {
 
-        GameWindow window = new GameWindow(new GameGrid(9, 9, 10));
+        if (ResourceHandler.loadResources()) {
+            GameWindow window = new GameWindow(new GameGrid(9, 9, 10));
+        } else {
+            // resources weren't loaded correctly
+        }
 
         //GameGrid grid = new GameGrid(9, 9, 10);
         //grid.output();
