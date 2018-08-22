@@ -19,7 +19,7 @@ public class GameGrid {
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
-                row.add(new Square(i, j, false));
+                row.add(new Square(i, j, false, 0));
             }
             grid.add(row);
         }
