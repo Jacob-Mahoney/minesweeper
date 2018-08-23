@@ -21,15 +21,17 @@ public class GameWindow extends JFrame {
 
     private void initComponents() {
 
+        Color color = new Color(35, 35, 35);
+
         grid = new JPanel();
         timer = new JLabel("timer");
 
         GridLayout gridLayout = new GridLayout(9,9);
 
         grid.setLayout(gridLayout);
-        gridLayout.setHgap(2);
-        gridLayout.setVgap(2);
-        grid.setBackground(Color.WHITE);
+        gridLayout.setHgap(1);
+        gridLayout.setVgap(1);
+        grid.setBackground(color);
 
         for (int i = 0; i < 81; i++) {
 
@@ -63,7 +65,7 @@ public class GameWindow extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // end program when this frame is closed
 
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(color);
 
         // hand-coded grouplayout stuff
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -94,7 +96,7 @@ public class GameWindow extends JFrame {
         Object obj = e.getSource();
         if (obj instanceof JButton) {
             JButton button = (JButton) obj;
-            System.out.println("button click!");
+            button.setIcon(ResourceHandler.test);
         }
     }
 

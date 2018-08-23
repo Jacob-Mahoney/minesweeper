@@ -9,6 +9,7 @@ public class ResourceHandler {
 
     static ImageIcon squareIcon;
     static ImageIcon squareIconHovered;
+    static ImageIcon test;
 
     private ResourceHandler() {
 
@@ -18,6 +19,7 @@ public class ResourceHandler {
         try {
             squareIcon = getImageIconFromResource("../resources/square.jpg");
             squareIconHovered = getImageIconFromResource("../resources/square-hovered.jpg");
+            test = getImageIconFromResource("../resources/square-8.jpg");
             return true;
         } catch (IOException e) {
             return false;
