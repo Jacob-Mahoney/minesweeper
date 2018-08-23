@@ -16,7 +16,7 @@ public class Window extends JFrame {
     private JPanel grid;
     private JLabel timer;
 
-    public Window(ArrayList<ArrayList<Square>> squares) {
+    public Window() {
         super("Poop");
         initComponents();
         setResizable(false);
