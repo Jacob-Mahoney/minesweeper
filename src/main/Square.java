@@ -22,6 +22,8 @@ public class Square {
 
     int getY() { return y; }
 
+    int getvalue() { return value;}
+
     boolean hasMine() { return hasMine; }
 
     void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
