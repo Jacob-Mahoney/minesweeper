@@ -37,7 +37,26 @@ public class GameWindow extends JFrame {
 
             JButton button = new JButton();
 
-            button.setIcon(ResourceHandler.squareIcon);
+            if (i == 0) {
+                button.setIcon(ResourceHandler.num1);
+            } else if (i == 1) {
+                button.setIcon(ResourceHandler.num2);
+            } else if (i == 2) {
+                button.setIcon(ResourceHandler.num3);
+            } else if (i == 3) {
+                button.setIcon(ResourceHandler.num4);
+            } else if (i == 4) {
+                button.setIcon(ResourceHandler.num5);
+            } else if (i == 5) {
+                button.setIcon(ResourceHandler.num6);
+            } else if (i == 6) {
+                button.setIcon(ResourceHandler.num7);
+            } else if (i == 7) {
+                button.setIcon(ResourceHandler.num8);
+            } else {
+                button.setIcon(ResourceHandler.squareIcon);
+            }
+
             button.setOpaque(false);
             button.setContentAreaFilled(false);
             button.setBorderPainted(false);
@@ -96,7 +115,7 @@ public class GameWindow extends JFrame {
         Object obj = e.getSource();
         if (obj instanceof JButton) {
             JButton button = (JButton) obj;
-            button.setIcon(ResourceHandler.test);
+            //button.setIcon(ResourceHandler.test);
         }
     }
 
@@ -104,7 +123,7 @@ public class GameWindow extends JFrame {
         Object obj = e.getSource();
         if (obj instanceof JButton) {
             JButton button = (JButton) obj;
-            button.setIcon(ResourceHandler.squareIconHovered);
+            //button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
@@ -112,7 +131,7 @@ public class GameWindow extends JFrame {
         Object obj = e.getSource();
         if (obj instanceof JButton) {
             JButton button = (JButton) obj;
-            button.setIcon(ResourceHandler.squareIcon);
+            //button.setIcon(ResourceHandler.squareIcon);
         }
     }
 
