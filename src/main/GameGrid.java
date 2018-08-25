@@ -38,6 +38,23 @@ public class GameGrid {
             } while (grid.get(quotient).get(remainder).hasMine() == true);
 
             grid.get(quotient).set(remainder, new Square(quotient, remainder, true, 0));
+            if (quotient == 0) {
+                if (remainder == 0) {
+                    grid.get(quotient).get(remainder+1).increaseValue();
+                    grid.get(quotient+1).get(remainder).increaseValue();
+                }
+                else if (remainder == this.width) {
+                    grid.get(quotient).get(remainder-1).increaseValue();
+                    grid.get (quotient+1).get(remainder).increaseValue();
+                }
+                else {
+                    grid.get(quotient).get(remainder-1).increaseValue();
+                    grid.get(quotient).get(remainder+1).increaseValue();
+                    grid.get(quotient+1).get(remainder-1).increaseValue();
+                    grid.get(quotient+1).get(remainder).increaseValue();
+                    grid.get(quotient+1).get(remainder+1).increaseValue();
+                }
+            }
             System.out.println(random);
         }
 
