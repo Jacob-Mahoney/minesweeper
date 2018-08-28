@@ -5,11 +5,11 @@ public class Square {
     private int x, y, value;
     private boolean hasMine;
 
-    Square(int x, int y, boolean hasMine, int value) {
+    Square(int x, int y) {
         this.x = x;
         this.y = y;
-        this.hasMine = hasMine;
-        this.value = value;
+        hasMine = false;
+        value = 0;
     }
 
     int getValue() { return value; }
