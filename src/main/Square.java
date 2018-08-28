@@ -1,5 +1,10 @@
 package main;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+
 public class Square {
 
     private int x, y, value;
@@ -22,10 +27,33 @@ public class Square {
 
     int getY() { return y; }
 
-    int getvalue() { return value;}
-
     boolean hasMine() { return hasMine; }
 
     void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
+
+    void onButtonClick(ActionEvent e) {
+        System.out.println(x + " | " + y + " | " + value);
+        /*Object obj = e.getSource();
+        if (obj instanceof JButton) {
+            JButton button = (JButton) obj;
+            button.setIcon(ResourceHandler.test);
+        }*/
+    }
+
+    /*private void onButtonHoverOver(MouseEvent e) {
+        Object obj = e.getSource();
+        if (obj instanceof JButton) {
+            JButton button = (JButton) obj;
+            //button.setIcon(ResourceHandler.squareIconHovered);
+        }
+    }
+
+    private void onButtonHoverOut(MouseEvent e) {
+        Object obj = e.getSource();
+        if (obj instanceof JButton) {
+            JButton button = (JButton) obj;
+            //button.setIcon(ResourceHandler.squareIcon);
+        }
+    }*/
 
 }

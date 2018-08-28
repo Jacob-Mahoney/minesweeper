@@ -15,7 +15,18 @@ public class GameGrid {
         init();
     }
 
+    int getWidth() { return width; }
+
+    int getHeight() { return height; }
+
+    Square getSquareByNumber(int number) {
+        int x = number / this.height;
+        int y = number % this.height;
+        return grid.get(x).get(y);
+    }
+
     private void init() {
+
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
@@ -23,86 +34,91 @@ public class GameGrid {
             }
             grid.add(row);
         }
-        int quotient;
-        int remainder;
+
+        int x;
+        int y;
         int random;
         int count = 0;
         //ArrayList<Integer> random_numbers;
         int[] random_numbers = {0};
         ArrayList<ArrayList<Square>> square = new ArrayList<ArrayList<Square>>();
+
         for (int k = 0; k < this.numberOfMines; k++) {
+
             do {
                 random = (int) (Math.random() * (this.height) * (this.width));
-                quotient = random / this.height;
-                remainder = random % this.height;
-            } while (grid.get(quotient).get(remainder).hasMine() == true);
+                x = random / this.height;
+                y = random % this.height;
+            } while (grid.get(x).get(y).hasMine());
 
-            grid.get(quotient).get(remainder).setHasMine(true); //set mine
+            grid.get(x).get(y).setHasMine(true); //set mine
 
-            if (quotient == 0) { //if mine is in first row
-                if (remainder == 0) { //if mine is in top left corner
-                    grid.get(quotient).get(remainder+1).increaseValue();
-                    grid.get(quotient+1).get(remainder).increaseValue();
-                    grid.get(quotient+1).get(remainder+1).increaseValue();
+            if (x == 0) { //if mine is in first row
+                if (y == 0) { //if mine is in top left corner
+                    grid.get(x).get(y+1).increaseValue();
+                    grid.get(x+1).get(y).increaseValue();
+                    grid.get(x+1).get(y+1).increaseValue();
                 }
-                else if (remainder == this.width-1) { //if mine is in top right corner
-                    grid.get(quotient).get(remainder-1).increaseValue();
-                    grid.get(quotient+1).get(remainder).increaseValue();
-                    grid.get(quotient+1).get(remainder-1).increaseValue();
+                else if (y == this.width-1) { //if mine is in top right corner
+                    grid.get(x).get(y-1).increaseValue();
+                    grid.get(x+1).get(y).increaseValue();
+                    grid.get(x+1).get(y-1).increaseValue();
                 }
                 else { //if mine is on top edge
-                    grid.get(quotient).get(remainder-1).increaseValue();
-                    grid.get(quotient).get(remainder+1).increaseValue();
-                    grid.get(quotient+1).get(remainder-1).increaseValue();
-                    grid.get(quotient+1).get(remainder).increaseValue();
-                    grid.get(quotient+1).get(remainder+1).increaseValue();
+                    grid.get(x).get(y-1).increaseValue();
+                    grid.get(x).get(y+1).increaseValue();
+                    grid.get(x+1).get(y-1).increaseValue();
+                    grid.get(x+1).get(y).increaseValue();
+                    grid.get(x+1).get(y+1).increaseValue();
                 }
             }
-            else if (quotient == this.height-1) { //if mine is in last row
-                if (remainder == 0) { //if mine is in bottom left corner
-                    grid.get(quotient).get(remainder+1).increaseValue();
-                    grid.get(quotient-1).get(remainder).increaseValue();
-                    grid.get(quotient-1).get(remainder+1).increaseValue();
+            else if (x == this.height-1) { //if mine is in last row
+                if (y == 0) { //if mine is in bottom left corner
+                    grid.get(x).get(y+1).increaseValue();
+                    grid.get(x-1).get(y).increaseValue();
+                    grid.get(x-1).get(y+1).increaseValue();
                 }
-                else if (remainder == this.width-1) { //if mine is in bottom right corner
-                    grid.get(quotient).get(remainder-1).increaseValue();
-                    grid.get(quotient-1).get(remainder).increaseValue();
-                    grid.get(quotient-1).get(remainder-1).increaseValue();
+                else if (y == this.width-1) { //if mine is in bottom right corner
+                    grid.get(x).get(y-1).increaseValue();
+                    grid.get(x-1).get(y).increaseValue();
+                    grid.get(x-1).get(y-1).increaseValue();
                 }
                 else { //if mine is on bottom edge
-                    grid.get(quotient).get(remainder-1).increaseValue();
-                    grid.get(quotient).get(remainder+1).increaseValue();
-                    grid.get(quotient-1).get(remainder-1).increaseValue();
-                    grid.get(quotient-1).get(remainder).increaseValue();
-                    grid.get(quotient-1).get(remainder+1).increaseValue();
+                    grid.get(x).get(y-1).increaseValue();
+                    grid.get(x).get(y+1).increaseValue();
+                    grid.get(x-1).get(y-1).increaseValue();
+                    grid.get(x-1).get(y).increaseValue();
+                    grid.get(x-1).get(y+1).increaseValue();
                 }
             }
-            else if (remainder == 0) { //if mine is on left side
-                grid.get(quotient-1).get(remainder).increaseValue();
-                grid.get(quotient-1).get(remainder+1).increaseValue();
-                grid.get(quotient).get(remainder+1).increaseValue();
-                grid.get(quotient+1).get(remainder).increaseValue();
-                grid.get(quotient+1).get(remainder+1).increaseValue();
+            else if (y == 0) { //if mine is on left side
+                grid.get(x-1).get(y).increaseValue();
+                grid.get(x-1).get(y+1).increaseValue();
+                grid.get(x).get(y+1).increaseValue();
+                grid.get(x+1).get(y).increaseValue();
+                grid.get(x+1).get(y+1).increaseValue();
             }
-            else if (remainder == this.width-1) { //if mine is on right side
-                grid.get(quotient-1).get(remainder-1).increaseValue();
-                grid.get(quotient-1).get(remainder).increaseValue();
-                grid.get(quotient).get(remainder-1).increaseValue();
-                grid.get(quotient+1).get(remainder-1).increaseValue();
-                grid.get(quotient+1).get(remainder).increaseValue();
+            else if (y == this.width-1) { //if mine is on right side
+                grid.get(x-1).get(y-1).increaseValue();
+                grid.get(x-1).get(y).increaseValue();
+                grid.get(x).get(y-1).increaseValue();
+                grid.get(x+1).get(y-1).increaseValue();
+                grid.get(x+1).get(y).increaseValue();
             }
             else { //if mine is in middle
-                grid.get(quotient-1).get(remainder-1).increaseValue();
-                grid.get(quotient-1).get(remainder).increaseValue();
-                grid.get(quotient-1).get(remainder+1).increaseValue();
-                grid.get(quotient).get(remainder-1).increaseValue();
-                grid.get(quotient).get(remainder+1).increaseValue();
-                grid.get(quotient+1).get(remainder-1).increaseValue();
-                grid.get(quotient+1).get(remainder).increaseValue();
-                grid.get(quotient+1).get(remainder+1).increaseValue();
+                grid.get(x-1).get(y-1).increaseValue();
+                grid.get(x-1).get(y).increaseValue();
+                grid.get(x-1).get(y+1).increaseValue();
+                grid.get(x).get(y-1).increaseValue();
+                grid.get(x).get(y+1).increaseValue();
+                grid.get(x+1).get(y-1).increaseValue();
+                grid.get(x+1).get(y).increaseValue();
+                grid.get(x+1).get(y+1).increaseValue();
             }
-            System.out.println(random);
+            //System.out.println(random);
         }
+
+        //output();
 
     }
 

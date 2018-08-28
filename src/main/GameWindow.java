@@ -10,6 +10,7 @@ public class GameWindow extends JFrame {
     private JPanel grid;
     private JLabel timer;
     private GameGrid gameGrid;
+    private int current = 0;
 
     public GameWindow(GameGrid gameGrid) {
         super("Poop");
@@ -26,35 +27,51 @@ public class GameWindow extends JFrame {
         grid = new JPanel();
         timer = new JLabel("timer");
 
-        GridLayout gridLayout = new GridLayout(9,9);
+        GridLayout gridLayout = new GridLayout(gameGrid.getWidth(),gameGrid.getHeight());
+        int numberOfSquares = gameGrid.getWidth() * gameGrid.getHeight();
 
         grid.setLayout(gridLayout);
         gridLayout.setHgap(1);
         gridLayout.setVgap(1);
         grid.setBackground(color);
 
-        for (int i = 0; i < 81; i++) {
+        for (int i = 0; i < numberOfSquares; i++) {
 
             JButton button = new JButton();
+            Square square = gameGrid.getSquareByNumber(i);
 
-            if (i == 0) {
-                button.setIcon(ResourceHandler.num1);
-            } else if (i == 1) {
-                button.setIcon(ResourceHandler.num2);
-            } else if (i == 2) {
-                button.setIcon(ResourceHandler.num3);
-            } else if (i == 3) {
-                button.setIcon(ResourceHandler.num4);
-            } else if (i == 4) {
-                button.setIcon(ResourceHandler.num5);
-            } else if (i == 5) {
-                button.setIcon(ResourceHandler.num6);
-            } else if (i == 6) {
-                button.setIcon(ResourceHandler.num7);
-            } else if (i == 7) {
-                button.setIcon(ResourceHandler.num8);
-            } else {
-                button.setIcon(ResourceHandler.squareIcon);
+            switch (square.getValue()) {
+                case 0:
+                    button.setIcon(ResourceHandler.squareIcon);
+                    break;
+                case 1:
+                    button.setIcon(ResourceHandler.num1);
+                    break;
+                case 2:
+                    button.setIcon(ResourceHandler.num2);
+                    break;
+                case 3:
+                    button.setIcon(ResourceHandler.num3);
+                    break;
+                case 4:
+                    button.setIcon(ResourceHandler.num4);
+                    break;
+                case 5:
+                    button.setIcon(ResourceHandler.num5);
+                    break;
+                case 6:
+                    button.setIcon(ResourceHandler.num6);
+                    break;
+                case 7:
+                    button.setIcon(ResourceHandler.num7);
+                    break;
+                case 8:
+                    button.setIcon(ResourceHandler.num8);
+                    break;
+            }
+
+            if (square.hasMine()) {
+                button.setIcon(ResourceHandler.bomb);
             }
 
             button.setOpaque(false);
@@ -62,22 +79,12 @@ public class GameWindow extends JFrame {
             button.setBorderPainted(false);
             button.setFocusPainted(false);
 
-            button.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    onButtonHoverOver(e);
-                }
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    onButtonHoverOut(e);
-                }
-            });
-
-            button.addActionListener(this::onButtonClick);
-
             button.setMinimumSize(new Dimension(24, 24));
             button.setPreferredSize(new Dimension(24, 24));
             button.setMaximumSize(new Dimension(24, 24));
+
+            button.addActionListener(square::onButtonClick);
+
             grid.add(button);
 
         }
@@ -109,30 +116,6 @@ public class GameWindow extends JFrame {
 
         pack();
 
-    }
-
-    private void onButtonClick(ActionEvent e) {
-        Object obj = e.getSource();
-        if (obj instanceof JButton) {
-            JButton button = (JButton) obj;
-            //button.setIcon(ResourceHandler.test);
-        }
-    }
-
-    private void onButtonHoverOver(MouseEvent e) {
-        Object obj = e.getSource();
-        if (obj instanceof JButton) {
-            JButton button = (JButton) obj;
-            //button.setIcon(ResourceHandler.squareIconHovered);
-        }
-    }
-
-    private void onButtonHoverOut(MouseEvent e) {
-        Object obj = e.getSource();
-        if (obj instanceof JButton) {
-            JButton button = (JButton) obj;
-            //button.setIcon(ResourceHandler.squareIcon);
-        }
     }
 
 }
