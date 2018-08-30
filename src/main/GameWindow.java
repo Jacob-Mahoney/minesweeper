@@ -27,7 +27,7 @@ public class GameWindow extends JFrame {
         grid = new JPanel();
         timer = new JLabel("timer");
 
-        GridLayout gridLayout = new GridLayout(gameGrid.getWidth(),gameGrid.getHeight());
+        GridLayout gridLayout = new GridLayout(gameGrid.getWidth(), gameGrid.getHeight());
         int numberOfSquares = gameGrid.getWidth() * gameGrid.getHeight();
 
         grid.setLayout(gridLayout);
@@ -40,39 +40,7 @@ public class GameWindow extends JFrame {
             JButton button = new JButton();
             Square square = gameGrid.getSquareByNumber(i);
 
-            switch (square.getValue()) {
-                case 0:
-                    button.setIcon(ResourceHandler.squareIcon);
-                    break;
-                case 1:
-                    button.setIcon(ResourceHandler.num1);
-                    break;
-                case 2:
-                    button.setIcon(ResourceHandler.num2);
-                    break;
-                case 3:
-                    button.setIcon(ResourceHandler.num3);
-                    break;
-                case 4:
-                    button.setIcon(ResourceHandler.num4);
-                    break;
-                case 5:
-                    button.setIcon(ResourceHandler.num5);
-                    break;
-                case 6:
-                    button.setIcon(ResourceHandler.num6);
-                    break;
-                case 7:
-                    button.setIcon(ResourceHandler.num7);
-                    break;
-                case 8:
-                    button.setIcon(ResourceHandler.num8);
-                    break;
-            }
-
-            if (square.hasMine()) {
-                button.setIcon(ResourceHandler.bomb);
-            }
+            button.setIcon(ResourceHandler.squareIcon);
 
             button.setOpaque(false);
             button.setContentAreaFilled(false);
@@ -84,6 +52,17 @@ public class GameWindow extends JFrame {
             button.setMaximumSize(new Dimension(24, 24));
 
             button.addActionListener(square::onButtonClick);
+
+            button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    square.onButtonHoverOver(e);
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    square.onButtonHoverOut(e);
+                }
+            });
 
             grid.add(button);
 
