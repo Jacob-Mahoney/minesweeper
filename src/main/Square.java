@@ -33,43 +33,47 @@ public class Square {
 
     void onButtonClick(ActionEvent e) {
 
-        flippedOver = true;
-        JButton button = (JButton) e.getSource();
+        if (!flippedOver) {
 
-        if (hasMine) {
+            flippedOver = true;
+            JButton button = (JButton) e.getSource();
 
-            button.setIcon(ResourceHandler.bomb);
+            if (hasMine) {
 
-        } else {
+                button.setIcon(ResourceHandler.bomb);
 
-            switch (value) {
-                case 0:
-                    button.setIcon(ResourceHandler.num0);
-                    break;
-                case 1:
-                    button.setIcon(ResourceHandler.num1);
-                    break;
-                case 2:
-                    button.setIcon(ResourceHandler.num2);
-                    break;
-                case 3:
-                    button.setIcon(ResourceHandler.num3);
-                    break;
-                case 4:
-                    button.setIcon(ResourceHandler.num4);
-                    break;
-                case 5:
-                    button.setIcon(ResourceHandler.num5);
-                    break;
-                case 6:
-                    button.setIcon(ResourceHandler.num6);
-                    break;
-                case 7:
-                    button.setIcon(ResourceHandler.num7);
-                    break;
-                case 8:
-                    button.setIcon(ResourceHandler.num8);
-                    break;
+            } else {
+
+                switch (value) {
+                    case 0:
+                        button.setIcon(ResourceHandler.num0);
+                        break;
+                    case 1:
+                        button.setIcon(ResourceHandler.num1);
+                        break;
+                    case 2:
+                        button.setIcon(ResourceHandler.num2);
+                        break;
+                    case 3:
+                        button.setIcon(ResourceHandler.num3);
+                        break;
+                    case 4:
+                        button.setIcon(ResourceHandler.num4);
+                        break;
+                    case 5:
+                        button.setIcon(ResourceHandler.num5);
+                        break;
+                    case 6:
+                        button.setIcon(ResourceHandler.num6);
+                        break;
+                    case 7:
+                        button.setIcon(ResourceHandler.num7);
+                        break;
+                    case 8:
+                        button.setIcon(ResourceHandler.num8);
+                        break;
+                }
+
             }
 
         }
