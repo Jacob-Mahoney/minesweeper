@@ -40,7 +40,7 @@ public class GameWindow extends JFrame {
             JButton button = new JButton();
             Square square = gameGrid.getSquareByNumber(i);
 
-            switch (square.getValue()) {
+            /*switch (square.getValue()) {
                 case 0:
                     button.setIcon(ResourceHandler.squareIcon);
                     break;
@@ -68,11 +68,11 @@ public class GameWindow extends JFrame {
                 case 8:
                     button.setIcon(ResourceHandler.num8);
                     break;
-            }
-
-            if (square.hasMine()) {
+            } */
+            button.setIcon(ResourceHandler.squareIcon);
+            /*if (square.hasMine()) {
                 button.setIcon(ResourceHandler.bomb);
-            }
+            } */
 
             button.setOpaque(false);
             button.setContentAreaFilled(false);
