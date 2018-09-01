@@ -1,19 +1,19 @@
 package main;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 
 public class Square {
 
     private int x, y, value;
-    private boolean hasMine;
+    private boolean hasMine, flippedOver;
 
     Square(int x, int y) {
         this.x = x;
         this.y = y;
         hasMine = false;
+        flippedOver = false;
         value = 0;
     }
 
@@ -32,28 +32,66 @@ public class Square {
     void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
 
     void onButtonClick(ActionEvent e) {
-        System.out.println(x + " | " + y + " | " + value);
-        /*Object obj = e.getSource();
-        if (obj instanceof JButton) {
-            JButton button = (JButton) obj;
-            button.setIcon(ResourceHandler.test);
-        }*/
+
+        if (!flippedOver) {
+
+            flippedOver = true;
+            JButton button = (JButton) e.getSource();
+
+            if (hasMine) {
+
+                button.setIcon(ResourceHandler.bomb);
+
+            } else {
+
+                switch (value) {
+                    case 0:
+                        button.setIcon(ResourceHandler.num0);
+                        break;
+                    case 1:
+                        button.setIcon(ResourceHandler.num1);
+                        break;
+                    case 2:
+                        button.setIcon(ResourceHandler.num2);
+                        break;
+                    case 3:
+                        button.setIcon(ResourceHandler.num3);
+                        break;
+                    case 4:
+                        button.setIcon(ResourceHandler.num4);
+                        break;
+                    case 5:
+                        button.setIcon(ResourceHandler.num5);
+                        break;
+                    case 6:
+                        button.setIcon(ResourceHandler.num6);
+                        break;
+                    case 7:
+                        button.setIcon(ResourceHandler.num7);
+                        break;
+                    case 8:
+                        button.setIcon(ResourceHandler.num8);
+                        break;
+                }
+
+            }
+
+        }
+
     }
 
-    /*private void onButtonHoverOver(MouseEvent e) {
-        Object obj = e.getSource();
-        if (obj instanceof JButton) {
-            JButton button = (JButton) obj;
-            //button.setIcon(ResourceHandler.squareIconHovered);
+    void onButtonHoverOver(MouseEvent e) {
+        if (!flippedOver) {
+            JButton button = (JButton) e.getSource();
+            button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
-    private void onButtonHoverOut(MouseEvent e) {
-        Object obj = e.getSource();
-        if (obj instanceof JButton) {
-            JButton button = (JButton) obj;
-            //button.setIcon(ResourceHandler.squareIcon);
+    void onButtonHoverOut(MouseEvent e) {
+        if (!flippedOver) {
+            JButton button = (JButton) e.getSource();
+            button.setIcon(ResourceHandler.squareIcon);
         }
-    }*/
+    }
 
 }

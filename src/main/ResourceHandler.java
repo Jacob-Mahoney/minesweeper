@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ResourceHandler {
 
-    static ImageIcon squareIcon, squareIconHovered, bomb, num1, num2, num3, num4, num5, num6, num7, num8;
+    static ImageIcon squareIcon, squareIconHovered, bomb, num0, num1, num2, num3, num4, num5, num6, num7, num8;
 
     private ResourceHandler() {
 
@@ -18,6 +18,7 @@ public class ResourceHandler {
             squareIcon = getImageIconFromResource("../resources/square.jpg");
             squareIconHovered = getImageIconFromResource("../resources/square-hovered.jpg");
             bomb = getImageIconFromResource("../resources/bomb.jpg");
+            num0 = getImageIconFromResource("../resources/square-0.jpg");
             num1 = getImageIconFromResource("../resources/square-1.jpg");
             num2 = getImageIconFromResource("../resources/square-2.jpg");
             num3 = getImageIconFromResource("../resources/square-3.jpg");
