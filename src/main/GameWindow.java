@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-// first frame that is shown on start
 public class GameWindow extends JFrame {
 
     private JPanel grid;

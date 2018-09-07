@@ -3,11 +3,13 @@ package main;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.Flow;
 
-public class Square {
+public class Square implements Flow.Publisher {
 
     private int x, y, value;
     private boolean hasMine, flippedOver;
+    private GameEndedEvent subscription;
 
     Square(int x, int y) {
         this.x = x;
@@ -15,6 +17,11 @@ public class Square {
         hasMine = false;
         flippedOver = false;
         value = 0;
+    }
+
+    public void subscribe(Flow.Subscriber subscriber) {
+        subscription = new GameEndedEvent(subscriber);
+        subscriber.onSubscribe(subscription);
     }
 
     int getValue() { return value; }
@@ -41,6 +48,12 @@ public class Square {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
+                if (subscription != null) {
+                    System.out.println("not null");
+                    subscription.request(0);
+                } else {
+                    System.out.println("null");
+                }
 
             } else {
 
