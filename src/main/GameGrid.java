@@ -13,6 +13,7 @@ public class GameGrid {
         this.height = height;
         this.numberOfMines = numberOfMines;
         init();
+        test(10);
     }
 
     int getWidth() { return width; }
@@ -30,7 +31,7 @@ public class GameGrid {
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
-                row.add(new Square(i, j));
+                row.add(new Square(i, j, this));
             }
             grid.add(row);
         }
@@ -128,6 +129,15 @@ public class GameGrid {
                 System.out.print(grid.get(i).get(j).getX() + "," + grid.get(i).get(j).getY() +  "," + grid.get(i).get(j).hasMine() + "," + grid.get(i).get(j).getValue() + " ");
             }
             System.out.print("\n\n");
+        }
+    }
+    public void expand(int x, int y) {
+
+    }
+    public void test(int number) {
+        System.out.print(number);
+        if (number > 0) {
+            test(number--);
         }
     }
 

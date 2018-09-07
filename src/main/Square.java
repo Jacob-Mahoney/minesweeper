@@ -8,10 +8,12 @@ public class Square {
 
     private int x, y, value;
     private boolean hasMine, flippedOver;
+    private GameGrid gameGrid;
 
-    Square(int x, int y) {
+    Square(int x, int y, GameGrid gameGrid) {
         this.x = x;
         this.y = y;
+        this.gameGrid = gameGrid;
         hasMine = false;
         flippedOver = false;
         value = 0;
@@ -47,6 +49,7 @@ public class Square {
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
+
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);
@@ -93,5 +96,9 @@ public class Square {
             button.setIcon(ResourceHandler.squareIcon);
         }
     }
+    void expand() {
+        //if (gameGrid.get(x).get(y+1).getValue() == 0) {
 
-}
+        }
+    }
+
