@@ -1,15 +1,16 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.concurrent.Flow;
 
-public class Square implements Flow.Publisher {
+public class Square {
 
     private int x, y, value;
     private boolean hasMine, flippedOver;
-    private GameEndedEvent subscription;
+    private JButton button;
 
     Square(int x, int y) {
         this.x = x;
@@ -19,9 +20,36 @@ public class Square implements Flow.Publisher {
         value = 0;
     }
 
-    public void subscribe(Flow.Subscriber subscriber) {
-        subscription = new GameEndedEvent(subscriber);
-        subscriber.onSubscribe(subscription);
+    JButton initButton() {
+
+        button = new JButton();
+
+        button.setIcon(ResourceHandler.squareIcon);
+
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+
+        button.setMinimumSize(new Dimension(24, 24));
+        button.setPreferredSize(new Dimension(24, 24));
+        button.setMaximumSize(new Dimension(24, 24));
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                onButtonHoverOver(e);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                onButtonHoverOut(e);
+            }
+        });
+
+        button.addActionListener(this::onButtonClick);
+
+        return button;
+
     }
 
     int getValue() { return value; }
@@ -38,7 +66,7 @@ public class Square implements Flow.Publisher {
 
     void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
 
-    void onButtonClick(ActionEvent e) {
+    private void onButtonClick(ActionEvent e) {
 
         if (!flippedOver) {
 
@@ -48,12 +76,6 @@ public class Square implements Flow.Publisher {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
-                if (subscription != null) {
-                    System.out.println("not null");
-                    subscription.request(0);
-                } else {
-                    System.out.println("null");
-                }
 
             } else {
 
@@ -93,14 +115,14 @@ public class Square implements Flow.Publisher {
 
     }
 
-    void onButtonHoverOver(MouseEvent e) {
+    private void onButtonHoverOver(MouseEvent e) {
         if (!flippedOver) {
             JButton button = (JButton) e.getSource();
             button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
-    void onButtonHoverOut(MouseEvent e) {
+    private void onButtonHoverOut(MouseEvent e) {
         if (!flippedOver) {
             JButton button = (JButton) e.getSource();
             button.setIcon(ResourceHandler.squareIcon);

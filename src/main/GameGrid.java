@@ -1,9 +1,9 @@
 package main;
 
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.concurrent.Flow;
 
-public class GameGrid implements Flow.Subscriber<Flow.Subscription> {
+public class GameGrid {
 
     private int width, height, numberOfMines;
     private ArrayList<ArrayList<Square>> grid;
@@ -31,9 +31,7 @@ public class GameGrid implements Flow.Subscriber<Flow.Subscription> {
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
-                Square s = new Square(i, i);
-                s.subscribe(this);
-                row.add(s);
+                row.add(new Square(i, j));
             }
             grid.add(row);
         }
@@ -132,27 +130,6 @@ public class GameGrid implements Flow.Subscriber<Flow.Subscription> {
             }
             System.out.print("\n\n");
         }
-    }
-
-    public void onSubscribe(Flow.Subscription subscription) {
-        //System.out.println(subscription.toString());
-    }
-
-    @Override
-    public void onNext(Flow.Subscription sub) {
-        if (sub instanceof GameEndedEvent) {
-            System.out.println("the game ended!");
-        }
-    }
-
-    @Override
-    public void onError(Throwable throwable) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
     }
 
 }
