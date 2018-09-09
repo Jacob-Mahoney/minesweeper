@@ -18,11 +18,11 @@ public class Square {
         hasMine = false;
         flippedOver = false;
         value = 0;
+        button = new JButton();
+        initButton();
     }
 
-    JButton initButton() {
-
-        button = new JButton();
+    private void initButton() {
 
         button.setIcon(ResourceHandler.squareIcon);
 
@@ -48,9 +48,9 @@ public class Square {
 
         button.addActionListener(this::onButtonClick);
 
-        return button;
-
     }
+
+    JButton getButton() { return button; }
 
     int getValue() { return value; }
 
@@ -71,7 +71,6 @@ public class Square {
         if (!flippedOver) {
 
             flippedOver = true;
-            JButton button = (JButton) e.getSource();
 
             if (hasMine) {
 

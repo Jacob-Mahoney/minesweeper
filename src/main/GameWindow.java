@@ -35,7 +35,7 @@ public class GameWindow extends JFrame {
         for (int i = 0; i < numberOfSquares; i++) {
 
             Square square = gameGrid.getSquareByNumber(i);
-            JButton button = square.initButton();
+            JButton button = square.getButton();
 
             grid.add(button);
 
