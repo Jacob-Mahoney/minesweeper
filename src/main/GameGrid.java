@@ -135,9 +135,9 @@ public class GameGrid {
 
     }
     public void test(int number) {
-        System.out.print(number);
+        System.out.println(number);
         if (number > 0) {
-            test(number--);
+            test(number-1);
         }
     }
 
