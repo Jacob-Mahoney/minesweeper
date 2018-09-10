@@ -1,7 +1,9 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Square {
@@ -9,6 +11,7 @@ public class Square {
     private int x, y, value;
     private boolean hasMine, flippedOver;
     private GameGrid gameGrid;
+    private JButton button;
 
     Square(int x, int y, GameGrid gameGrid) {
         this.x = x;
@@ -17,7 +20,39 @@ public class Square {
         hasMine = false;
         flippedOver = false;
         value = 0;
+        button = new JButton();
+        initButton();
     }
+
+    private void initButton() {
+
+        button.setIcon(ResourceHandler.squareIcon);
+
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+
+        button.setMinimumSize(new Dimension(24, 24));
+        button.setPreferredSize(new Dimension(24, 24));
+        button.setMaximumSize(new Dimension(24, 24));
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                onButtonHoverOver(e);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                onButtonHoverOut(e);
+            }
+        });
+
+        button.addActionListener(this::onButtonClick);
+
+    }
+
+    JButton getButton() { return button; }
 
     int getValue() { return value; }
 
@@ -33,12 +68,11 @@ public class Square {
 
     void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
 
-    void onButtonClick(ActionEvent e) {
+    private void onButtonClick(ActionEvent e) {
 
         if (!flippedOver) {
 
             flippedOver = true;
-            JButton button = (JButton) e.getSource();
 
             if (hasMine) {
 
@@ -83,14 +117,14 @@ public class Square {
 
     }
 
-    void onButtonHoverOver(MouseEvent e) {
+    private void onButtonHoverOver(MouseEvent e) {
         if (!flippedOver) {
             JButton button = (JButton) e.getSource();
             button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
-    void onButtonHoverOut(MouseEvent e) {
+    private void onButtonHoverOut(MouseEvent e) {
         if (!flippedOver) {
             JButton button = (JButton) e.getSource();
             button.setIcon(ResourceHandler.squareIcon);
