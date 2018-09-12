@@ -42,6 +42,7 @@ public class Square {
             public void mouseEntered(MouseEvent e) {
                 onButtonHoverOver(e);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 onButtonHoverOut(e);
@@ -52,38 +53,65 @@ public class Square {
 
     }
 
-    JButton getButton() { return button; }
+    JButton getButton() {
+        return button;
+    }
 
-    int getValue() { return value; }
+    int getValue() {
+        return value;
+    }
 
     void increaseValue() {
         value++;
     }
 
-    int getX() { return x; }
+    int getX() {
+        return x;
+    }
 
-    int getY() { return y; }
+    int getY() {
+        return y;
+    }
 
-    boolean hasMine() { return hasMine; }
+    boolean hasMine() {
+        return hasMine;
+    }
 
-    void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
+    void setHasMine(boolean hasMine) {
+        this.hasMine = hasMine;
+    }
 
     private void onButtonClick(ActionEvent e) {
+            flipOver();
+    }
 
+    private void onButtonHoverOver(MouseEvent e) {
         if (!flippedOver) {
+            button.setIcon(ResourceHandler.squareIconHovered);
+        }
+    }
 
+    private void onButtonHoverOut(MouseEvent e) {
+        if (!flippedOver) {
+            button.setIcon(ResourceHandler.squareIcon);
+        }
+    }
+
+    void flipOver() {
+        if (!flippedOver) {
             flippedOver = true;
 
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
+                //we need to add to this what happens when they click on the mine and the game ends
 
             } else {
 
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
-
+                        gameGrid.expand(this);
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);
@@ -112,27 +140,6 @@ public class Square {
                 }
 
             }
-
-        }
-
-    }
-
-    private void onButtonHoverOver(MouseEvent e) {
-        if (!flippedOver) {
-            JButton button = (JButton) e.getSource();
-            button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
-
-    private void onButtonHoverOut(MouseEvent e) {
-        if (!flippedOver) {
-            JButton button = (JButton) e.getSource();
-            button.setIcon(ResourceHandler.squareIcon);
-        }
-    }
-    void expand() {
-        //if (gameGrid.get(x).get(y+1).getValue() == 0) {
-
-        }
-    }
-
+}

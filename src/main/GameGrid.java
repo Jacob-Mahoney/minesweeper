@@ -14,7 +14,6 @@ public class GameGrid {
         this.height = height;
         this.numberOfMines = numberOfMines;
         init();
-        test(10);
     }
 
     int getWidth() { return width; }
@@ -132,13 +131,70 @@ public class GameGrid {
             System.out.print("\n\n");
         }
     }
-    public void expand(int x, int y) {
-
-    }
-    public void test(int number) {
-        System.out.println(number);
-        if (number > 0) {
-            test(number-1);
+    public void expand(Square square) {
+        int x = square.getX();
+        int y = square.getY();
+        if (x == 0) { //if clicked in first row
+            if (y == 0) { //if clicked in top left corner
+                grid.get(x).get(y+1).flipOver();
+                grid.get(x+1).get(y).flipOver();
+                grid.get(x+1).get(y+1).flipOver();
+            }
+            else if (y == this.width-1) { //if clicked in top right corner
+                grid.get(x).get(y-1).flipOver();
+                grid.get(x+1).get(y).flipOver();
+                grid.get(x+1).get(y-1).flipOver();
+            }
+            else { //if clicked on top edge
+                grid.get(x).get(y-1).flipOver();
+                grid.get(x).get(y+1).flipOver();
+                grid.get(x+1).get(y-1).flipOver();
+                grid.get(x+1).get(y).flipOver();
+                grid.get(x+1).get(y+1).flipOver();
+            }
+        }
+        else if (x == this.height-1) { //if clicked in last row
+            if (y == 0) { //if clicked in bottom left corner
+                grid.get(x).get(y+1).flipOver();
+                grid.get(x-1).get(y).flipOver();
+                grid.get(x-1).get(y+1).flipOver();
+            }
+            else if (y == this.width-1) { //if clicked in bottom right corner
+                grid.get(x).get(y-1).flipOver();
+                grid.get(x-1).get(y).flipOver();
+                grid.get(x-1).get(y-1).flipOver();
+            }
+            else { //if clicked on bottom edge
+                grid.get(x).get(y-1).flipOver();
+                grid.get(x).get(y+1).flipOver();
+                grid.get(x-1).get(y-1).flipOver();
+                grid.get(x-1).get(y).flipOver();
+                grid.get(x-1).get(y+1).flipOver();
+            }
+        }
+        else if (y == 0) { //if clicked on left side
+            grid.get(x-1).get(y).flipOver();
+            grid.get(x-1).get(y+1).flipOver();
+            grid.get(x).get(y+1).flipOver();
+            grid.get(x+1).get(y).flipOver();
+            grid.get(x+1).get(y+1).flipOver();
+        }
+        else if (y == this.width-1) { //if clicked on right side
+            grid.get(x-1).get(y-1).flipOver();
+            grid.get(x-1).get(y).flipOver();
+            grid.get(x).get(y-1).flipOver();
+            grid.get(x+1).get(y-1).flipOver();
+            grid.get(x+1).get(y).flipOver();
+        }
+        else { //if clicked in middle
+            grid.get(x-1).get(y-1).flipOver();
+            grid.get(x-1).get(y).flipOver();
+            grid.get(x-1).get(y+1).flipOver();
+            grid.get(x).get(y-1).flipOver();
+            grid.get(x).get(y+1).flipOver();
+            grid.get(x+1).get(y-1).flipOver();
+            grid.get(x+1).get(y).flipOver();
+            grid.get(x+1).get(y+1).flipOver();
         }
     }
 
