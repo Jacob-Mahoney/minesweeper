@@ -1,9 +1,8 @@
 package main;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
-public class GameGrid {
+public class GameGrid implements Subscriber<String> {
 
     private int width, height, numberOfMines;
     private ArrayList<ArrayList<Square>> grid;
@@ -14,7 +13,10 @@ public class GameGrid {
         this.height = height;
         this.numberOfMines = numberOfMines;
         init();
-        test(10);
+    }
+
+    public void onUpdated(Publisher pub, String arg) {
+        System.out.println(arg);
     }
 
     int getWidth() { return width; }
@@ -32,7 +34,9 @@ public class GameGrid {
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
-                row.add(new Square(i, j, this));
+                Square s = new Square(i, j, this);
+                s.addSubscriber(this);
+                row.add(s);
             }
             grid.add(row);
         }
@@ -132,14 +136,9 @@ public class GameGrid {
             System.out.print("\n\n");
         }
     }
+
     public void expand(int x, int y) {
 
-    }
-    public void test(int number) {
-        System.out.println(number);
-        if (number > 0) {
-            test(number-1);
-        }
     }
 
 }

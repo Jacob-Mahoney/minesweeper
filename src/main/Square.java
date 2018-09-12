@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Square {
+public class Square extends Publisher<String> {
 
     private int x, y, value;
     private boolean hasMine, flippedOver;
@@ -77,13 +77,13 @@ public class Square {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
+                updateSubscribers("game over!");
 
             } else {
 
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
-
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);
@@ -119,20 +119,15 @@ public class Square {
 
     private void onButtonHoverOver(MouseEvent e) {
         if (!flippedOver) {
-            JButton button = (JButton) e.getSource();
             button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
     private void onButtonHoverOut(MouseEvent e) {
         if (!flippedOver) {
-            JButton button = (JButton) e.getSource();
             button.setIcon(ResourceHandler.squareIcon);
         }
     }
-    void expand() {
-        //if (gameGrid.get(x).get(y+1).getValue() == 0) {
 
-        }
-    }
+}
 
