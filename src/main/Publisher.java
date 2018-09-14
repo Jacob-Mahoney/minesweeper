@@ -2,18 +2,22 @@ package main;
 
 import java.util.ArrayList;
 
-public abstract class Publisher {
+abstract class Publisher<T> {
 
-    private ArrayList<Subscriber> subscribers;
+    private ArrayList<Subscriber<T>> subscribers;
 
-    public Publisher() {
-        subscribers = new ArrayList<Subscriber>();
+    Publisher() {
+        subscribers = new ArrayList<Subscriber<T>>();
     }
 
-    void addSubscriber(Subscriber sub) {
+    void addSubscriber(Subscriber<T> sub) {
         subscribers.add(sub);
     }
 
-
+    void updateSubscribers(T arg) {
+        for (Subscriber<T> sub : subscribers) {
+            sub.onUpdated(this, arg);
+        }
+    }
 
 }

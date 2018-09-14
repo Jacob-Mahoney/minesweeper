@@ -1,7 +1,7 @@
 package main;
 
-public class Subscriber {
+public interface Subscriber<T> {
 
-
+    void onUpdated(Publisher<T> pub, T arg);
 
 }
