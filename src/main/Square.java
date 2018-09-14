@@ -3,25 +3,27 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Square extends Publisher<String> {
 
     private int x, y, value;
-    private boolean hasMine, flippedOver;
+    private boolean hasMine;
     private GameGrid gameGrid;
     private JButton button;
+    private SquareState state;
 
     Square(int x, int y, GameGrid gameGrid) {
         this.x = x;
         this.y = y;
         this.gameGrid = gameGrid;
         hasMine = false;
-        flippedOver = false;
         value = 0;
         button = new JButton();
         initButton();
+        state = SquareState.NOT_FLIPPED_OVER;
     }
 
     private void initButton() {
@@ -40,15 +42,21 @@ public class Square extends Publisher<String> {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                onButtonHoverOver(e);
+                onButtonHoverOver();
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                onButtonHoverOut(e);
+                onButtonHoverOut();
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    onRightClick();
+                }
             }
         });
 
-        button.addActionListener(this::onButtonClick);
+        button.addActionListener((ActionEvent e) -> onLeftClick());
 
     }
 
@@ -68,11 +76,11 @@ public class Square extends Publisher<String> {
 
     void setHasMine(boolean hasMine) { this.hasMine = hasMine; }
 
-    private void onButtonClick(ActionEvent e) {
+    private void onLeftClick() {
 
-        if (!flippedOver) {
+        if (state == SquareState.NOT_FLIPPED_OVER) {
 
-            flippedOver = true;
+            state = SquareState.FLIPPED_OVER;
 
             if (hasMine) {
 
@@ -117,14 +125,18 @@ public class Square extends Publisher<String> {
 
     }
 
-    private void onButtonHoverOver(MouseEvent e) {
-        if (!flippedOver) {
+    private void onRightClick() {
+        System.out.println("right click!");
+    }
+
+    private void onButtonHoverOver() {
+        if (state == SquareState.NOT_FLIPPED_OVER) {
             button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
-    private void onButtonHoverOut(MouseEvent e) {
-        if (!flippedOver) {
+    private void onButtonHoverOut() {
+        if (state == SquareState.NOT_FLIPPED_OVER) {
             button.setIcon(ResourceHandler.squareIcon);
         }
     }
