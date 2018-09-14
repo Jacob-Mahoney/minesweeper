@@ -198,4 +198,10 @@ public class GameGrid {
         }
     }
 
+    public void endOfGame() {
+        for (int k = 0; k < this.numberOfMines; k++) {
+
+            //button.setIcon(ResourceHandler.bomb);
+        }
+    }
 }

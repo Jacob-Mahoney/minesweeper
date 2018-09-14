@@ -9,19 +9,20 @@ import java.awt.event.MouseEvent;
 public class Square {
 
     private int x, y, value;
-    private boolean hasMine, flippedOver;
+    private boolean hasMine;
     private GameGrid gameGrid;
     private JButton button;
+    private squareState state;
 
     Square(int x, int y, GameGrid gameGrid) {
         this.x = x;
         this.y = y;
         this.gameGrid = gameGrid;
         hasMine = false;
-        flippedOver = false;
         value = 0;
         button = new JButton();
         initButton();
+        state = squareState.NOT_FLIPPED_OVER;
     }
 
     private void initButton() {
@@ -83,28 +84,30 @@ public class Square {
 
     private void onButtonClick(ActionEvent e) {
             flipOver();
-    }
+            }
+
 
     private void onButtonHoverOver(MouseEvent e) {
-        if (!flippedOver) {
+        if (state == squareState.NOT_FLIPPED_OVER) {
             button.setIcon(ResourceHandler.squareIconHovered);
         }
     }
 
     private void onButtonHoverOut(MouseEvent e) {
-        if (!flippedOver) {
+        if (state == squareState.NOT_FLIPPED_OVER) {
             button.setIcon(ResourceHandler.squareIcon);
         }
     }
 
     void flipOver() {
-        if (!flippedOver) {
-            flippedOver = true;
+        if (state == squareState.NOT_FLIPPED_OVER) {
+            state = squareState.FLIPPED_OVER;
 
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
-                //we need to add to this what happens when they click on the mine and the game ends
+                gameGrid.endOfGame();
+
 
             } else {
 
