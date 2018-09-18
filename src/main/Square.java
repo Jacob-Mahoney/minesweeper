@@ -6,18 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Square extends Publisher<String> {
+public class Square extends Publisher<Event> {
 
     private int x, y, value;
     private boolean hasMine;
-    private GameGrid gameGrid;
     private JButton button;
     private SquareState state;
 
-    Square(int x, int y, GameGrid gameGrid) {
+    Square(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gameGrid = gameGrid;
         hasMine = false;
         value = 0;
         button = new JButton();
@@ -96,15 +94,14 @@ public class Square extends Publisher<String> {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
-                gameGrid.endOfGame();
-                updateSubscribers("game over!");
+                updateSubscribers(new GameEndedEvent());
 
             } else {
 
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
-                        gameGrid.expand(this);
+                        updateSubscribers(new ZeroExpandEvent(this));
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);

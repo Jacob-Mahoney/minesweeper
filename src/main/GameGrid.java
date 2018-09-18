@@ -2,7 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
-public class GameGrid implements Subscriber<String> {
+public class GameGrid implements Subscriber<Event> {
 
     private int width, height, numberOfMines;
     private ArrayList<ArrayList<Square>> grid;
@@ -15,13 +15,18 @@ public class GameGrid implements Subscriber<String> {
         init();
     }
 
-    public void onUpdated(Publisher pub, String arg) {
-        System.out.println(arg);
-    }
-
     int getWidth() { return width; }
 
     int getHeight() { return height; }
+
+    public void onUpdated(Publisher<Event> pub, Event arg) {
+        if (arg instanceof ZeroExpandEvent) {
+            ZeroExpandEvent e = (ZeroExpandEvent) arg;
+            expand(e.getSquare());
+        } else if (arg instanceof GameEndedEvent) {
+            endOfGame();
+        }
+    }
 
     Square getSquareByNumber(int number) {
         int x = number / this.height;
@@ -34,7 +39,7 @@ public class GameGrid implements Subscriber<String> {
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
-                Square s = new Square(i, j, this);
+                Square s = new Square(i, j);
                 s.addSubscriber(this);
                 row.add(s);
             }
@@ -121,20 +126,8 @@ public class GameGrid implements Subscriber<String> {
                 grid.get(x+1).get(y).increaseValue();
                 grid.get(x+1).get(y+1).increaseValue();
             }
-            //System.out.println(random);
         }
 
-        //output();
-
-    }
-
-    void output() {
-        for (int i = 0; i < this.height; i++) {
-            for (int j = 0; j < this.width; j++) {
-                System.out.print(grid.get(i).get(j).getX() + "," + grid.get(i).get(j).getY() +  "," + grid.get(i).get(j).hasMine() + "," + grid.get(i).get(j).getValue() + " ");
-            }
-            System.out.print("\n\n");
-        }
     }
 
     public void expand(Square square) {
@@ -204,7 +197,8 @@ public class GameGrid implements Subscriber<String> {
         }
     }
 
-    public void endOfGame() {
+    private void endOfGame() {
+        System.out.println("end of game baby!");
         for (int k = 0; k < this.numberOfMines; k++) {
 
             //button.setIcon(ResourceHandler.bomb);
