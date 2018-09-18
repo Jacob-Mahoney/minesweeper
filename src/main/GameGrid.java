@@ -121,20 +121,9 @@ public class GameGrid implements Subscriber<String> {
                 grid.get(x+1).get(y).increaseValue();
                 grid.get(x+1).get(y+1).increaseValue();
             }
-            //System.out.println(random);
+
         }
 
-        //output();
-
-    }
-
-    void output() {
-        for (int i = 0; i < this.height; i++) {
-            for (int j = 0; j < this.width; j++) {
-                System.out.print(grid.get(i).get(j).getX() + "," + grid.get(i).get(j).getY() +  "," + grid.get(i).get(j).hasMine() + "," + grid.get(i).get(j).getValue() + " ");
-            }
-            System.out.print("\n\n");
-        }
     }
 
     public void expand(Square square) {
@@ -204,11 +193,17 @@ public class GameGrid implements Subscriber<String> {
         }
     }
 
-    public void endOfGame() {
-        for (int k = 0; k < this.numberOfMines; k++) {
+    public void endOfGame(Square square) {
 
+            for (int m = 0; m < this.height; m++) {
+                for (int n = 0; n < this.width; n++) {
+                    if (grid.get(m).get(n).hasMine() == true) {
+                        //if (square.)
+                    }
+                }
+
+            }
             //button.setIcon(ResourceHandler.bomb);
         }
-    }
 
 }

@@ -96,7 +96,7 @@ public class Square extends Publisher<String> {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
-                gameGrid.endOfGame();
+                gameGrid.endOfGame(this);
                 updateSubscribers("game over!");
 
             } else {
@@ -143,7 +143,14 @@ public class Square extends Publisher<String> {
     }
 
     private void onRightClick() {
-        System.out.println("right click!");
+
+        if (state == SquareState.NOT_FLIPPED_OVER) {
+            //set icon to the flag icon
+        }
+
+        if (state == SquareState.FLAGGED) {
+            button.setIcon(ResourceHandler.squareIcon);
+        }
     }
 
     private void onButtonHoverOver() {
