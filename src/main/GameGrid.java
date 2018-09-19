@@ -198,11 +198,15 @@ public class GameGrid implements Subscriber<Event> {
         }
     }
 
-    public void endOfGame(Square square) {
+    public void endOfGame() {
+
 		for (int m = 0; m < this.height; m++) {
 			for (int n = 0; n < this.width; n++) {
-				if (grid.get(m).get(n).hasMine() == true) {
-					//if (square.)
+			    Square s = grid.get(m).get(n);
+				if (s.hasMine()) {
+					if (s.getState() == SquareState.FLAGGED) {
+                        //s.getButton.seticon
+                    }
 				}
 			}
 		}

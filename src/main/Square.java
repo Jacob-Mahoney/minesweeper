@@ -61,6 +61,10 @@ public class Square extends Publisher<Event> {
         return button;
     }
 
+    SquareState getState() {
+        return state;
+    }
+
     int getValue() {
         return value;
     }
