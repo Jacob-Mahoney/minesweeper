@@ -98,14 +98,14 @@ public class Square extends Publisher<Event> {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
-                updateSubscribers(new GameEndedEvent());
+                updateSubscribers(new Event(EventType.GAME_ENDED));
 
             } else {
 
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
-                        updateSubscribers(new ZeroExpandEvent(this));
+                        updateSubscribers(new ZeroExpandEvent(EventType.ZERO_EXPAND, this));
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);

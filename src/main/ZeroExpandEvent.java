@@ -1,10 +1,11 @@
 package main;
 
-public class ZeroExpandEvent implements Event {
+class ZeroExpandEvent extends Event {
 
     private Square s;
 
-    ZeroExpandEvent(Square s) {
+    ZeroExpandEvent(EventType type, Square s) {
+        super(type);
         this.s = s;
     }
 

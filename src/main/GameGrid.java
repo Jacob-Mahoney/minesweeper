@@ -19,11 +19,11 @@ public class GameGrid implements Subscriber<Event> {
 
     int getHeight() { return height; }
 
-    public void onUpdated(Publisher<Event> pub, Event arg) {
-        if (arg instanceof ZeroExpandEvent) {
-            ZeroExpandEvent e = (ZeroExpandEvent) arg;
+    public void onUpdated(Publisher<Event> pub, Event event) {
+        if (event.getType() == EventType.ZERO_EXPAND) {
+            ZeroExpandEvent e = (ZeroExpandEvent) event;
             expand(e.getSquare());
-        } else if (arg instanceof GameEndedEvent) {
+        } else if (event.getType() == EventType.GAME_ENDED) {
             endOfGame();
         }
     }
@@ -199,7 +199,6 @@ public class GameGrid implements Subscriber<Event> {
     }
 
     public void endOfGame() {
-
 		for (int m = 0; m < this.height; m++) {
 			for (int n = 0; n < this.width; n++) {
 			    Square s = grid.get(m).get(n);
