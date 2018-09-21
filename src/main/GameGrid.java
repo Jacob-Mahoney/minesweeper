@@ -204,7 +204,10 @@ public class GameGrid implements Subscriber<Event> {
 			    Square s = grid.get(m).get(n);
 				if (s.hasMine()) {
 					if (s.getState() == SquareState.FLAGGED) {
-                        //s.getButton.seticon
+                        //s.getButton().setIcon(ResourceHandler.flag and bomb);
+                    }
+                    else {
+                        s.getButton().setIcon(ResourceHandler.bomb);
                     }
 				}
 			}
