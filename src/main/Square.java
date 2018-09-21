@@ -46,6 +46,12 @@ public class Square extends Publisher<Event> {
                 onButtonHoverOut();
             }
             @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    onLeftClick();
+                }
+            }
+            @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     onRightClick();
@@ -53,7 +59,7 @@ public class Square extends Publisher<Event> {
             }
         });
 
-        button.addActionListener((ActionEvent e) -> onLeftClick());
+        //button.addActionListener((ActionEvent e) -> onLeftClick());
 
     }
 
