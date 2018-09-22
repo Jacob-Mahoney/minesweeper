@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GameGrid implements Subscriber<Event> {
 
-    private int width, height, numberOfMines;
+    private int width, height, numberOfMines, numberOfFlips;
     private ArrayList<ArrayList<Square>> grid;
 
     GameGrid(int width, int height, int numberOfMines) {
@@ -12,6 +12,7 @@ public class GameGrid implements Subscriber<Event> {
         this.width = width;
         this.height = height;
         this.numberOfMines = numberOfMines;
+        numberOfFlips = 0;
         init();
     }
 
@@ -23,8 +24,11 @@ public class GameGrid implements Subscriber<Event> {
         if (event.getType() == EventType.ZERO_EXPAND) {
             ZeroExpandEvent e = (ZeroExpandEvent) event;
             expand(e.getSquare());
-        } else if (event.getType() == EventType.GAME_ENDED) {
+        } else if (event.getType() == EventType.BOMB_TRIGGERED) {
             endOfGame();
+        } else if (event.getType() == EventType.SQUARE_FLIPPED) {
+            numberOfFlips++;
+            winCheck();
         }
     }
 
@@ -131,7 +135,7 @@ public class GameGrid implements Subscriber<Event> {
 
     }
 
-    public void expand(Square square) {
+    private void expand(Square square) {
         int x = square.getX();
         int y = square.getY();
         if (x == 0) { //if clicked in first row
@@ -198,7 +202,7 @@ public class GameGrid implements Subscriber<Event> {
         }
     }
 
-    public void endOfGame() {
+    private void endOfGame() {
 		for (int m = 0; m < this.height; m++) {
 			for (int n = 0; n < this.width; n++) {
 				if (grid.get(m).get(n).hasMine()) {
@@ -207,5 +211,16 @@ public class GameGrid implements Subscriber<Event> {
 			}
 		}
 	}
+
+	private void winCheck() {
+        int nonMineSquares = (width*height) - numberOfMines;
+        if (numberOfFlips == nonMineSquares) {
+            won();
+        }
+    }
+
+    private void won() {
+        System.out.println("you won!");
+    }
 
 }

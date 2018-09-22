@@ -2,7 +2,8 @@ package main;
 
 enum EventType {
 
-    GAME_ENDED,
-    ZERO_EXPAND
+    BOMB_TRIGGERED,
+    ZERO_EXPAND,
+    SQUARE_FLIPPED
 
 }
