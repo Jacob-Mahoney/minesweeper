@@ -4,8 +4,8 @@ class ZeroExpandEvent extends Event {
 
     private Square s;
 
-    ZeroExpandEvent(EventType type, Square s) {
-        super(type);
+    ZeroExpandEvent(Square s) {
+        super(EventType.ZERO_EXPAND);
         this.s = s;
     }
 

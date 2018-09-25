@@ -2,7 +2,6 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -48,14 +47,18 @@ public class Square extends Publisher<Event> {
             }
 
             @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    onLeftClick();
+                }
+            }
+            @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     onRightClick();
                 }
             }
         });
-
-        button.addActionListener((ActionEvent e) -> onLeftClick());
 
     }
 
@@ -103,11 +106,13 @@ public class Square extends Publisher<Event> {
                 updateSubscribers(new Event(EventType.BOMB_TRIGGERED));
 
             } else {
+
                 updateSubscribers(new Event(EventType.SQUARE_FLIPPED));
+
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
-                        updateSubscribers(new ZeroExpandEvent(EventType.ZERO_EXPAND, this));
+                        updateSubscribers(new ZeroExpandEvent(this));
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);
@@ -142,6 +147,7 @@ public class Square extends Publisher<Event> {
     }
 
     private void onLeftClick() {
+        updateSubscribers(new SquareLeftClickEvent(this));
         flipOver();
     }
 

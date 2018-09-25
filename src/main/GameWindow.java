@@ -53,7 +53,6 @@ public class GameWindow extends JFrame {
                         .addGap(25)
                         .addGroup(layout.createParallelGroup()
                                 .addComponent(timer)
-                                .addGap(15)
                                 .addComponent(grid))
                         .addGap(25))
         );

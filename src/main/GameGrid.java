@@ -2,9 +2,10 @@ package main;
 
 import java.util.ArrayList;
 
-public class GameGrid implements Subscriber<Event> {
+public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
 
     private int width, height, numberOfMines, numberOfFlips;
+    private boolean gridGenerated;
     private ArrayList<ArrayList<Square>> grid;
 
     GameGrid(int width, int height, int numberOfMines) {
@@ -13,6 +14,7 @@ public class GameGrid implements Subscriber<Event> {
         this.height = height;
         this.numberOfMines = numberOfMines;
         numberOfFlips = 0;
+        gridGenerated = false;
         init();
     }
 
@@ -23,12 +25,17 @@ public class GameGrid implements Subscriber<Event> {
     public void onUpdated(Publisher<Event> pub, Event event) {
         if (event.getType() == EventType.ZERO_EXPAND) {
             ZeroExpandEvent e = (ZeroExpandEvent) event;
-            expand(e.getSquare());
+            zeroExpand(e.getSquare());
         } else if (event.getType() == EventType.BOMB_TRIGGERED) {
-            endOfGame();
+            updateSubscribers(new Event(EventType.GAME_OVER));
         } else if (event.getType() == EventType.SQUARE_FLIPPED) {
             numberOfFlips++;
             winCheck();
+        } else if (event.getType() == EventType.SQUARE_LEFT_CLICK) {
+            if (!gridGenerated) {
+                SquareLeftClickEvent e = (SquareLeftClickEvent) event;
+                generateGrid(e.getSquare());
+            }
         }
     }
 
@@ -52,6 +59,7 @@ public class GameGrid implements Subscriber<Event> {
     }
 
     private void generateGrid(Square square) {
+
         int x;
         int y;
         int random;
@@ -126,10 +134,12 @@ public class GameGrid implements Subscriber<Event> {
             }
 
         }
+
+        gridGenerated = true;
+
     }
 
-
-    private void expand(Square square) {
+    private void zeroExpand(Square square) {
         int x = square.getX();
         int y = square.getY();
         if (x == 0) { //if clicked in first row
@@ -213,14 +223,10 @@ public class GameGrid implements Subscriber<Event> {
 	}
 
 	private void winCheck() {
-        int nonMineSquares = (width*height)-numberOfMines;
+        int nonMineSquares = (width*height) - numberOfMines;
         if (numberOfFlips == nonMineSquares) {
-            won();
+            updateSubscribers(new Event(EventType.GAME_WON));
         }
-    }
-
-    private void won() {
-        System.out.println("You won!");
     }
 
 }
