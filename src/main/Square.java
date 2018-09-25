@@ -41,10 +41,12 @@ public class Square extends Publisher<Event> {
             public void mouseEntered(MouseEvent e) {
                 onButtonHoverOver();
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 onButtonHoverOut();
             }
+
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
@@ -98,10 +100,10 @@ public class Square extends Publisher<Event> {
             if (hasMine) {
 
                 button.setIcon(ResourceHandler.bomb);
-                updateSubscribers(new Event(EventType.GAME_ENDED));
+                updateSubscribers(new Event(EventType.BOMB_TRIGGERED));
 
             } else {
-
+                updateSubscribers(new Event(EventType.SQUARE_FLIPPED));
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
@@ -145,18 +147,24 @@ public class Square extends Publisher<Event> {
 
     private void onRightClick() {
 
-        if (state == SquareState.NOT_FLIPPED_OVER) {
-            //set icon to the flag icon
-        }
-
         if (state == SquareState.FLAGGED) {
+            state = SquareState.NOT_FLIPPED_OVER;
             button.setIcon(ResourceHandler.squareIcon);
         }
+        else if (state == SquareState.NOT_FLIPPED_OVER) {
+            state = SquareState.FLAGGED;
+            button.setIcon(ResourceHandler.flag);
+        }
+
+
     }
 
     private void onButtonHoverOver() {
         if (state == SquareState.NOT_FLIPPED_OVER) {
             button.setIcon(ResourceHandler.squareIconHovered);
+        }
+        if (state == SquareState.FLAGGED) {
+            button.setIcon(ResourceHandler.flagHovered);
         }
     }
 
@@ -164,6 +172,9 @@ public class Square extends Publisher<Event> {
         if (state == SquareState.NOT_FLIPPED_OVER) {
             button.setIcon(ResourceHandler.squareIcon);
         }
-    }
+        if (state == SquareState.FLAGGED) {
+            button.setIcon(ResourceHandler.flag);
+        }
 
+    }
 }

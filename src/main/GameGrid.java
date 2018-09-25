@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GameGrid implements Subscriber<Event> {
 
-    private int width, height, numberOfMines;
+    private int width, height, numberOfMines, numberOfFlips;
     private ArrayList<ArrayList<Square>> grid;
 
     GameGrid(int width, int height, int numberOfMines) {
@@ -12,6 +12,7 @@ public class GameGrid implements Subscriber<Event> {
         this.width = width;
         this.height = height;
         this.numberOfMines = numberOfMines;
+        numberOfFlips = 0;
         init();
     }
 
@@ -23,8 +24,11 @@ public class GameGrid implements Subscriber<Event> {
         if (event.getType() == EventType.ZERO_EXPAND) {
             ZeroExpandEvent e = (ZeroExpandEvent) event;
             expand(e.getSquare());
-        } else if (event.getType() == EventType.GAME_ENDED) {
+        } else if (event.getType() == EventType.BOMB_TRIGGERED) {
             endOfGame();
+        } else if (event.getType() == EventType.SQUARE_FLIPPED) {
+            numberOfFlips++;
+            winCheck();
         }
     }
 
@@ -45,14 +49,16 @@ public class GameGrid implements Subscriber<Event> {
             }
             grid.add(row);
         }
+    }
 
+    private void generateGrid(Square square) {
         int x;
         int y;
         int random;
         int count = 0;
         //ArrayList<Integer> random_numbers;
         int[] random_numbers = {0};
-        ArrayList<ArrayList<Square>> square = new ArrayList<ArrayList<Square>>();
+        ArrayList<ArrayList<Square>> squares = new ArrayList<ArrayList<Square>>();
 
         for (int k = 0; k < this.numberOfMines; k++) {
 
@@ -66,72 +72,64 @@ public class GameGrid implements Subscriber<Event> {
 
             if (x == 0) { //if mine is in first row
                 if (y == 0) { //if mine is in top left corner
-                    grid.get(x).get(y+1).increaseValue();
-                    grid.get(x+1).get(y).increaseValue();
-                    grid.get(x+1).get(y+1).increaseValue();
+                    grid.get(x).get(y + 1).increaseValue();
+                    grid.get(x + 1).get(y).increaseValue();
+                    grid.get(x + 1).get(y + 1).increaseValue();
+                } else if (y == this.width - 1) { //if mine is in top right corner
+                    grid.get(x).get(y - 1).increaseValue();
+                    grid.get(x + 1).get(y).increaseValue();
+                    grid.get(x + 1).get(y - 1).increaseValue();
+                } else { //if mine is on top edge
+                    grid.get(x).get(y - 1).increaseValue();
+                    grid.get(x).get(y + 1).increaseValue();
+                    grid.get(x + 1).get(y - 1).increaseValue();
+                    grid.get(x + 1).get(y).increaseValue();
+                    grid.get(x + 1).get(y + 1).increaseValue();
                 }
-                else if (y == this.width-1) { //if mine is in top right corner
-                    grid.get(x).get(y-1).increaseValue();
-                    grid.get(x+1).get(y).increaseValue();
-                    grid.get(x+1).get(y-1).increaseValue();
-                }
-                else { //if mine is on top edge
-                    grid.get(x).get(y-1).increaseValue();
-                    grid.get(x).get(y+1).increaseValue();
-                    grid.get(x+1).get(y-1).increaseValue();
-                    grid.get(x+1).get(y).increaseValue();
-                    grid.get(x+1).get(y+1).increaseValue();
-                }
-            }
-            else if (x == this.height-1) { //if mine is in last row
+            } else if (x == this.height - 1) { //if mine is in last row
                 if (y == 0) { //if mine is in bottom left corner
-                    grid.get(x).get(y+1).increaseValue();
-                    grid.get(x-1).get(y).increaseValue();
-                    grid.get(x-1).get(y+1).increaseValue();
+                    grid.get(x).get(y + 1).increaseValue();
+                    grid.get(x - 1).get(y).increaseValue();
+                    grid.get(x - 1).get(y + 1).increaseValue();
+                } else if (y == this.width - 1) { //if mine is in bottom right corner
+                    grid.get(x).get(y - 1).increaseValue();
+                    grid.get(x - 1).get(y).increaseValue();
+                    grid.get(x - 1).get(y - 1).increaseValue();
+                } else { //if mine is on bottom edge
+                    grid.get(x).get(y - 1).increaseValue();
+                    grid.get(x).get(y + 1).increaseValue();
+                    grid.get(x - 1).get(y - 1).increaseValue();
+                    grid.get(x - 1).get(y).increaseValue();
+                    grid.get(x - 1).get(y + 1).increaseValue();
                 }
-                else if (y == this.width-1) { //if mine is in bottom right corner
-                    grid.get(x).get(y-1).increaseValue();
-                    grid.get(x-1).get(y).increaseValue();
-                    grid.get(x-1).get(y-1).increaseValue();
-                }
-                else { //if mine is on bottom edge
-                    grid.get(x).get(y-1).increaseValue();
-                    grid.get(x).get(y+1).increaseValue();
-                    grid.get(x-1).get(y-1).increaseValue();
-                    grid.get(x-1).get(y).increaseValue();
-                    grid.get(x-1).get(y+1).increaseValue();
-                }
-            }
-            else if (y == 0) { //if mine is on left side
-                grid.get(x-1).get(y).increaseValue();
-                grid.get(x-1).get(y+1).increaseValue();
-                grid.get(x).get(y+1).increaseValue();
-                grid.get(x+1).get(y).increaseValue();
-                grid.get(x+1).get(y+1).increaseValue();
-            }
-            else if (y == this.width-1) { //if mine is on right side
-                grid.get(x-1).get(y-1).increaseValue();
-                grid.get(x-1).get(y).increaseValue();
-                grid.get(x).get(y-1).increaseValue();
-                grid.get(x+1).get(y-1).increaseValue();
-                grid.get(x+1).get(y).increaseValue();
-            }
-            else { //if mine is in middle
-                grid.get(x-1).get(y-1).increaseValue();
-                grid.get(x-1).get(y).increaseValue();
-                grid.get(x-1).get(y+1).increaseValue();
-                grid.get(x).get(y-1).increaseValue();
-                grid.get(x).get(y+1).increaseValue();
-                grid.get(x+1).get(y-1).increaseValue();
-                grid.get(x+1).get(y).increaseValue();
-                grid.get(x+1).get(y+1).increaseValue();
+            } else if (y == 0) { //if mine is on left side
+                grid.get(x - 1).get(y).increaseValue();
+                grid.get(x - 1).get(y + 1).increaseValue();
+                grid.get(x).get(y + 1).increaseValue();
+                grid.get(x + 1).get(y).increaseValue();
+                grid.get(x + 1).get(y + 1).increaseValue();
+            } else if (y == this.width - 1) { //if mine is on right side
+                grid.get(x - 1).get(y - 1).increaseValue();
+                grid.get(x - 1).get(y).increaseValue();
+                grid.get(x).get(y - 1).increaseValue();
+                grid.get(x + 1).get(y - 1).increaseValue();
+                grid.get(x + 1).get(y).increaseValue();
+            } else { //if mine is in middle
+                grid.get(x - 1).get(y - 1).increaseValue();
+                grid.get(x - 1).get(y).increaseValue();
+                grid.get(x - 1).get(y + 1).increaseValue();
+                grid.get(x).get(y - 1).increaseValue();
+                grid.get(x).get(y + 1).increaseValue();
+                grid.get(x + 1).get(y - 1).increaseValue();
+                grid.get(x + 1).get(y).increaseValue();
+                grid.get(x + 1).get(y + 1).increaseValue();
             }
 
         }
-
     }
 
-    public void expand(Square square) {
+
+    private void expand(Square square) {
         int x = square.getX();
         int y = square.getY();
         if (x == 0) { //if clicked in first row
@@ -198,13 +196,13 @@ public class GameGrid implements Subscriber<Event> {
         }
     }
 
-    public void endOfGame() {
+    private void endOfGame() {
 		for (int m = 0; m < this.height; m++) {
 			for (int n = 0; n < this.width; n++) {
 			    Square s = grid.get(m).get(n);
 				if (s.hasMine()) {
 					if (s.getState() == SquareState.FLAGGED) {
-                        //s.getButton().setIcon(ResourceHandler.flag and bomb);
+
                     }
                     else {
                         s.getButton().setIcon(ResourceHandler.bomb);
@@ -213,5 +211,16 @@ public class GameGrid implements Subscriber<Event> {
 			}
 		}
 	}
+
+	private void winCheck() {
+        int nonMineSquares = (width*height)-numberOfMines;
+        if (numberOfFlips == nonMineSquares) {
+            won();
+        }
+    }
+
+    private void won() {
+        System.out.println("You won!");
+    }
 
 }
