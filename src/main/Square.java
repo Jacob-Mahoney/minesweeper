@@ -106,7 +106,7 @@ public class Square extends Publisher<Event> {
                 switch (value) {
                     case 0:
                         button.setIcon(ResourceHandler.num0);
-                        updateSubscribers(new ZeroExpandEvent(EventType.ZERO_EXPAND, this));
+                        updateSubscribers(new ZeroExpandEvent(this));
                         break;
                     case 1:
                         button.setIcon(ResourceHandler.num1);
@@ -141,6 +141,7 @@ public class Square extends Publisher<Event> {
     }
 
     private void onLeftClick() {
+        updateSubscribers(new SquareLeftClickEvent(this));
         flipOver();
     }
 
