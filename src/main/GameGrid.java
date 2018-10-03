@@ -61,46 +61,38 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
     private boolean safeZoneCheck(Square clickedSquare, Square mineSquare) { //checks to see if mine is in safezone
         int squarex = clickedSquare.getX();
         int squarey = clickedSquare.getY();
-        int count = 0;
-        boolean check = false;
         ArrayList<Square> list = new ArrayList<Square>();
         if (squarex == 0) {
             if (squarey == 0) { //clicked in top left corner
                 list.add(grid.get(squarex).get(squarey + 1));
                 list.add(grid.get(squarex + 1).get(squarey));
                 list.add(grid.get(squarex + 1).get(squarey + 1));
-                count = 3;
             } else if (squarey == this.width - 1) { //clicked in top right corner
                 list.add(grid.get(squarex).get(squarey - 1));
                 list.add(grid.get(squarex + 1).get(squarey));
                 list.add(grid.get(squarex + 1).get(squarey - 1));
-                count = 3;
             } else { //clicked on top edge
                 list.add(grid.get(squarex).get(squarey - 1));
                 list.add(grid.get(squarex).get(squarey + 1));
                 list.add(grid.get(squarex + 1).get(squarey - 1));
                 list.add(grid.get(squarex + 1).get(squarey));
                 list.add(grid.get(squarex + 1).get(squarey + 1));
-                count = 5;
             }
         } else if (squarex == this.height - 1) { //clicked in last row
                 if (squarey == 0) { //clicked in bottom left corner
                     list.add(grid.get(squarex).get(squarey+1));
                     list.add(grid.get(squarex-1).get(squarey));
                     list.add(grid.get(squarex-1).get(squarey+1));
-                    count = 3;
                 } else if (squarey == this.width - 1) { //clicked in bottom right corner
                     list.add(grid.get(squarex).get(squarey-1));
                     list.add(grid.get(squarex-1).get(squarey));
                     list.add(grid.get(squarex-1).get(squarey-1));
-                    count = 3;
                 } else { //clicked on bottom edge
                     list.add(grid.get(squarex).get(squarey-1));
                     list.add(grid.get(squarex).get(squarey+1));
                     list.add(grid.get(squarex-1).get(squarey-1));
                     list.add(grid.get(squarex-1).get(squarey));
                     list.add(grid.get(squarex-1).get(squarey+1));
-                    count = 5;
                 }
             } else if (squarey == 0) { //clicked on left side
                 list.add(grid.get(squarex-1).get(squarey));
@@ -108,14 +100,12 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
                 list.add(grid.get(squarex).get(squarey+1));
                 list.add(grid.get(squarex+1).get(squarey));
                 list.add(grid.get(squarex+1).get(squarey+1));
-                count = 5;
             } else if (squarey == this.width - 1) { //clicked on right side
                 list.add(grid.get(squarex-1).get(squarey-1));
                 list.add(grid.get(squarex-1).get(squarey));
                 list.add(grid.get(squarex).get(squarey-1));
                 list.add(grid.get(squarex+1).get(squarey-1));
                 list.add(grid.get(squarex+1).get(squarey));
-                count = 5;
             } else { //clicked in middle
                 list.add(grid.get(squarex-1).get(squarey-1));
                 list.add(grid.get(squarex-1).get(squarey));
@@ -125,15 +115,14 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
                 list.add(grid.get(squarex+1).get(squarey-1));
                 list.add(grid.get(squarex+1).get(squarey));
                 list.add(grid.get(squarex+1).get(squarey+1));
-                count = 8;
             }
 
-        for (int p = 0; p < count; p++ ) {
+        for (int p = 0; p < list.size(); p++ ) {
             if (mineSquare == list.get(p)) {
-                check = true;
+                return true;
             }
         }
-        return check;
+        return false;
     }
 
     private void generateGrid(Square square) {
