@@ -46,7 +46,6 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
     }
 
     private void init() {
-
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {
@@ -63,10 +62,6 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
         int x;
         int y;
         int random;
-        int count = 0;
-        //ArrayList<Integer> random_numbers;
-        int[] random_numbers = {0};
-        ArrayList<ArrayList<Square>> squares = new ArrayList<ArrayList<Square>>();
 
         for (int k = 0; k < this.numberOfMines; k++) {
 
