@@ -79,44 +79,44 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
                 list.add(grid.get(squarex + 1).get(squarey + 1));
             }
         } else if (squarex == this.height - 1) { //clicked in last row
-                if (squarey == 0) { //clicked in bottom left corner
-                    list.add(grid.get(squarex).get(squarey+1));
-                    list.add(grid.get(squarex-1).get(squarey));
-                    list.add(grid.get(squarex-1).get(squarey+1));
-                } else if (squarey == this.width - 1) { //clicked in bottom right corner
-                    list.add(grid.get(squarex).get(squarey-1));
-                    list.add(grid.get(squarex-1).get(squarey));
-                    list.add(grid.get(squarex-1).get(squarey-1));
-                } else { //clicked on bottom edge
-                    list.add(grid.get(squarex).get(squarey-1));
-                    list.add(grid.get(squarex).get(squarey+1));
-                    list.add(grid.get(squarex-1).get(squarey-1));
-                    list.add(grid.get(squarex-1).get(squarey));
-                    list.add(grid.get(squarex-1).get(squarey+1));
-                }
-            } else if (squarey == 0) { //clicked on left side
+            if (squarey == 0) { //clicked in bottom left corner
+                list.add(grid.get(squarex).get(squarey+1));
                 list.add(grid.get(squarex-1).get(squarey));
                 list.add(grid.get(squarex-1).get(squarey+1));
-                list.add(grid.get(squarex).get(squarey+1));
-                list.add(grid.get(squarex+1).get(squarey));
-                list.add(grid.get(squarex+1).get(squarey+1));
-            } else if (squarey == this.width - 1) { //clicked on right side
-                list.add(grid.get(squarex-1).get(squarey-1));
-                list.add(grid.get(squarex-1).get(squarey));
+            } else if (squarey == this.width - 1) { //clicked in bottom right corner
                 list.add(grid.get(squarex).get(squarey-1));
-                list.add(grid.get(squarex+1).get(squarey-1));
-                list.add(grid.get(squarex+1).get(squarey));
-            } else { //clicked in middle
+                list.add(grid.get(squarex-1).get(squarey));
+                list.add(grid.get(squarex-1).get(squarey-1));
+            } else { //clicked on bottom edge
+                list.add(grid.get(squarex).get(squarey-1));
+                list.add(grid.get(squarex).get(squarey+1));
                 list.add(grid.get(squarex-1).get(squarey-1));
                 list.add(grid.get(squarex-1).get(squarey));
                 list.add(grid.get(squarex-1).get(squarey+1));
-                list.add(grid.get(squarex).get(squarey-1));
-                list.add(grid.get(squarex).get(squarey+1));
-                list.add(grid.get(squarex+1).get(squarey-1));
-                list.add(grid.get(squarex+1).get(squarey));
-                list.add(grid.get(squarex+1).get(squarey+1));
             }
-
+        } else if (squarey == 0) { //clicked on left side
+            list.add(grid.get(squarex-1).get(squarey));
+            list.add(grid.get(squarex-1).get(squarey+1));
+            list.add(grid.get(squarex).get(squarey+1));
+            list.add(grid.get(squarex+1).get(squarey));
+            list.add(grid.get(squarex+1).get(squarey+1));
+        } else if (squarey == this.width - 1) { //clicked on right side
+            list.add(grid.get(squarex-1).get(squarey-1));
+            list.add(grid.get(squarex-1).get(squarey));
+            list.add(grid.get(squarex).get(squarey-1));
+            list.add(grid.get(squarex+1).get(squarey-1));
+            list.add(grid.get(squarex+1).get(squarey));
+        } else { //clicked in middle
+            list.add(grid.get(squarex-1).get(squarey-1));
+            list.add(grid.get(squarex-1).get(squarey));
+            list.add(grid.get(squarex-1).get(squarey+1));
+            list.add(grid.get(squarex).get(squarey-1));
+            list.add(grid.get(squarex).get(squarey+1));
+            list.add(grid.get(squarex+1).get(squarey-1));
+            list.add(grid.get(squarex+1).get(squarey));
+            list.add(grid.get(squarex+1).get(squarey+1));
+        }
+            list.add(grid.get(squarex) .get(squarey));
         for (int p = 0; p < list.size(); p++ ) {
             if (mineSquare == list.get(p)) {
                 return true;
