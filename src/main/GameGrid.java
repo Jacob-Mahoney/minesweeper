@@ -46,7 +46,6 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
     }
 
     private void init() {
-
         for (int i = 0; i < this.height; i++) {
             ArrayList<Square> row = new ArrayList<Square>();
             for (int j = 0; j < this.width; j++) {

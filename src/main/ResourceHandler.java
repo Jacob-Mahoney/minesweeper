@@ -5,9 +5,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class ResourceHandler {
+class ResourceHandler {
 
     static ImageIcon squareIcon, squareIconHovered, bomb, num0, num1, num2, num3, num4, num5, num6, num7, num8, flag, flagHovered;
+    static ImageIcon beginner, intermediate, advanced;
+    static ImageIcon beginnerH, intermediateH, advancedH;
+    static ImageIcon beginnerI, intermediateI, advancedI;
 
     private ResourceHandler() {
 
@@ -29,6 +32,15 @@ public class ResourceHandler {
             num8 = getImageIconFromResource("../resources/square-8.jpg");
             flag = getImageIconFromResource("../resources/flag.jpg");
             flagHovered = getImageIconFromResource("../resources/flag-hovered.jpg");
+            beginner = getImageIconFromResource("../resources/beg.jpg");
+            intermediate = getImageIconFromResource("../resources/int.jpg");
+            advanced = getImageIconFromResource("../resources/adv.jpg");
+            beginnerH = getImageIconFromResource("../resources/beg h.jpg");
+            intermediateH = getImageIconFromResource("../resources/int h.jpg");
+            advancedH = getImageIconFromResource("../resources/adv h.jpg");
+            beginnerI = getImageIconFromResource("../resources/beg i.jpg");
+            intermediateI = getImageIconFromResource("../resources/int i.jpg");
+            advancedI = getImageIconFromResource("../resources/adv i.jpg");
             return true;
         } catch (IOException e) {
             return false;

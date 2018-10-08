@@ -1,7 +1,6 @@
 package main;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -9,7 +8,7 @@ public class Square extends Publisher<Event> {
 
     private int x, y, value;
     private boolean hasMine;
-    private JButton button;
+    private CustomButton button;
     private SquareState state;
 
     Square(int x, int y) {
@@ -17,39 +16,31 @@ public class Square extends Publisher<Event> {
         this.y = y;
         hasMine = false;
         value = 0;
-        button = new JButton();
-        initButton();
         state = SquareState.NOT_FLIPPED_OVER;
+        initButton();
     }
 
     private void initButton() {
 
-        button.setIcon(ResourceHandler.squareIcon);
-
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-
-        button.setMinimumSize(new Dimension(24, 24));
-        button.setPreferredSize(new Dimension(24, 24));
-        button.setMaximumSize(new Dimension(24, 24));
+        button = new CustomButton(ResourceHandler.squareIcon, 24, 24);
 
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 onButtonHoverOver();
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 onButtonHoverOut();
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    onLeftClick();
+                    if (e.getClickCount() < 2) {
+                        onLeftClick();
+                    } else {
+                        onDoubleLeftClick();
+                    }
                 }
             }
             @Override
@@ -151,8 +142,11 @@ public class Square extends Publisher<Event> {
         flipOver();
     }
 
-    private void onRightClick() {
+    private void onDoubleLeftClick() {
 
+    }
+
+    private void onRightClick() {
         if (state == SquareState.FLAGGED) {
             state = SquareState.NOT_FLIPPED_OVER;
             button.setIcon(ResourceHandler.squareIcon);
@@ -161,8 +155,6 @@ public class Square extends Publisher<Event> {
             state = SquareState.FLAGGED;
             button.setIcon(ResourceHandler.flag);
         }
-
-
     }
 
     private void onButtonHoverOver() {
