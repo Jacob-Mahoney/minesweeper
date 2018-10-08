@@ -29,16 +29,18 @@ public class Square extends Publisher<Event> {
             public void mouseEntered(MouseEvent e) {
                 onButtonHoverOver();
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 onButtonHoverOut();
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    onLeftClick();
+                    if (e.getClickCount() < 2) {
+                        onLeftClick();
+                    } else {
+                        onDoubleLeftClick();
+                    }
                 }
             }
             @Override
@@ -140,8 +142,11 @@ public class Square extends Publisher<Event> {
         flipOver();
     }
 
-    private void onRightClick() {
+    private void onDoubleLeftClick() {
 
+    }
+
+    private void onRightClick() {
         if (state == SquareState.FLAGGED) {
             state = SquareState.NOT_FLIPPED_OVER;
             button.setIcon(ResourceHandler.squareIcon);
@@ -150,8 +155,6 @@ public class Square extends Publisher<Event> {
             state = SquareState.FLAGGED;
             button.setIcon(ResourceHandler.flag);
         }
-
-
     }
 
     private void onButtonHoverOver() {

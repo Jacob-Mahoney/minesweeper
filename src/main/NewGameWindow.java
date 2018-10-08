@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 class NewGameWindow extends JFrame {
@@ -19,7 +18,6 @@ class NewGameWindow extends JFrame {
     }
 
     private void initComponents() {
-
 
         CustomRadioButton beginnerButton = new CustomRadioButton(ResourceHandler.beginner, ResourceHandler.beginnerH, ResourceHandler.beginnerI, 150, 50);
         CustomRadioButton intermediateButton = new CustomRadioButton(ResourceHandler.intermediate, ResourceHandler.intermediateH, ResourceHandler.intermediateI, 150, 50);
