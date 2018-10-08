@@ -46,7 +46,7 @@ class NewGameWindow extends JFrame {
         top.setMinimumSize(new Dimension(450, 30));
         top.setPreferredSize(new Dimension(450, 30));
         top.setMaximumSize(new Dimension(450, 30));
-        top.setBackground(bg);
+        top.setBackground(new Color(25, 24, 26));
 
         top.addMouseListener(new MouseAdapter() {
             @Override
@@ -68,14 +68,15 @@ class NewGameWindow extends JFrame {
 
         for (JTextField textField : textFields) {
             textField.setBorder(null);
-            textField.setMinimumSize(new Dimension(50, 30));
-            textField.setPreferredSize(new Dimension(50, 30));
-            textField.setMaximumSize(new Dimension(50, 30));
-            textField.setSize(new Dimension(50, 30));
+            textField.setMinimumSize(new Dimension(100, 30));
+            textField.setPreferredSize(new Dimension(100, 30));
+            textField.setMaximumSize(new Dimension(100, 30));
+            textField.setSize(new Dimension(100, 30));
             textField.setBorder(BorderFactory.createCompoundBorder(textField.getBorder(), BorderFactory.createEmptyBorder(8, 8, 8, 8)));
             textField.setBackground(new Color(60, 57, 64));
             textField.setForeground(Color.WHITE);
             textField.setCaretColor(Color.WHITE);
+            textField.setHorizontalAlignment(SwingConstants.CENTER);
         }
 
         textFields.get(0).setText("9");
@@ -113,10 +114,11 @@ class NewGameWindow extends JFrame {
 
         for (JLabel label : labels) {
             label.setForeground(Color.WHITE);
-            label.setMinimumSize(new Dimension(50, 30));
-            label.setPreferredSize(new Dimension(50, 30));
-            label.setMaximumSize(new Dimension(50, 30));
-            label.setSize(new Dimension(50, 30));
+            label.setMinimumSize(new Dimension(100, 30));
+            label.setPreferredSize(new Dimension(100, 30));
+            label.setMaximumSize(new Dimension(100, 30));
+            label.setSize(new Dimension(100, 30));
+            label.setHorizontalAlignment(SwingConstants.CENTER);
         }
 
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // end program when this frame is closed
@@ -134,20 +136,20 @@ class NewGameWindow extends JFrame {
                 .addComponent(intermediateButton)
                 .addComponent(advancedButton))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15)
-                .addComponent(labels.get(0))
-                .addGap(5)
-                .addComponent(textFields.get(0)))
+                .addGap(175)
+                .addGroup(layout.createParallelGroup()
+                    .addComponent(labels.get(0))
+                    .addComponent(textFields.get(0))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15)
-                .addComponent(labels.get(1))
-                .addGap(5)
-                .addComponent(textFields.get(1)))
+                .addGap(175)
+                .addGroup(layout.createParallelGroup()
+                    .addComponent(labels.get(1))
+                    .addComponent(textFields.get(1))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15)
-                .addComponent(labels.get(2))
-                .addGap(5)
-                .addComponent(textFields.get(2)))
+                .addGap(175)
+                .addGroup(layout.createParallelGroup()
+                    .addComponent(labels.get(2))
+                    .addComponent(textFields.get(2))))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addComponent(top)
@@ -155,19 +157,16 @@ class NewGameWindow extends JFrame {
                 .addComponent(beginnerButton)
                 .addComponent(intermediateButton)
                 .addComponent(advancedButton))
-            .addGap(15)
-            .addGroup(layout.createParallelGroup()
-                .addComponent(labels.get(0))
-                .addComponent(textFields.get(0)))
-            .addGap(5)
-            .addGroup(layout.createParallelGroup()
-                .addComponent(labels.get(1))
-                .addComponent(textFields.get(1)))
-            .addGap(5)
-            .addGroup(layout.createParallelGroup()
-                .addComponent(labels.get(2))
-                .addComponent(textFields.get(2)))
-            .addGap(75)
+            .addGap(10)
+            .addComponent(labels.get(0))
+            .addComponent(textFields.get(0))
+            .addGap(10)
+            .addComponent(labels.get(1))
+            .addComponent(textFields.get(1))
+            .addGap(10)
+            .addComponent(labels.get(2))
+            .addComponent(textFields.get(2))
+            .addGap(20)
         );
 
         pack();
