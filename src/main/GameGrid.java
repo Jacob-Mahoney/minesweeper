@@ -24,7 +24,7 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
 
     public void onUpdated(Publisher<Event> pub, Event event) {
         if (event.getType() == EventType.ZERO_EXPAND) {
-            ZeroExpandEvent e = (ZeroExpandEvent) event;
+            SquareEvent e = (SquareEvent) event;
             zeroExpand(e.getSquare());
         } else if (event.getType() == EventType.BOMB_TRIGGERED) {
             updateSubscribers(new Event(EventType.GAME_OVER));
@@ -33,9 +33,11 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
             winCheck();
         } else if (event.getType() == EventType.SQUARE_LEFT_CLICK) {
             if (!gridGenerated) {
-                SquareLeftClickEvent e = (SquareLeftClickEvent) event;
+                SquareEvent e = (SquareEvent) event;
                 generateGrid(e.getSquare());
             }
+        } else if (event.getType() == EventType.SQUARE_DOUBLE_LEFT_CLICK) {
+
         }
     }
 
@@ -115,7 +117,7 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
             list.add(grid.get(squarex+1).get(squarey));
             list.add(grid.get(squarex+1).get(squarey+1));
         }
-            list.add(grid.get(squarex) .get(squarey));
+        list.add(grid.get(squarex).get(squarey));
         for (int p = 0; p < list.size(); p++ ) {
             if (mineSquare == list.get(p)) {
                 return true;
