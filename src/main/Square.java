@@ -143,7 +143,9 @@ public class Square extends Publisher<Event> {
     }
 
     private void onDoubleLeftClick() {
-
+        if (state == SquareState.NOT_FLIPPED_OVER) {
+            //
+        }
     }
 
     private void onRightClick() {
