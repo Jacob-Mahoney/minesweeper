@@ -134,7 +134,6 @@ public class Square extends Publisher<Event> {
             }
 
         }
-
     }
 
     private void onLeftClick() {
@@ -143,10 +142,9 @@ public class Square extends Publisher<Event> {
     }
 
     private void onDoubleLeftClick() {
-        if (state == SquareState.NOT_FLIPPED_OVER) {
-            //
+        if (state == SquareState.FLIPPED_OVER) {
+            updateSubscribers(new SquareEvent(EventType.SQUARE_DOUBLE_LEFT_CLICK, this));
         }
-        //updateSubscribers(new SquareEvent(EventType.SQUARE_DOUBLE_LEFT_CLICK, this));
     }
 
     private void onRightClick() {

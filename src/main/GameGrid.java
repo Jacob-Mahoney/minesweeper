@@ -37,7 +37,8 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
                 generateGrid(e.getSquare());
             }
         } else if (event.getType() == EventType.SQUARE_DOUBLE_LEFT_CLICK) {
-
+            SquareEvent e = (SquareEvent) event;
+            doubleLeftClick(e.getSquare());
         }
     }
 
@@ -267,6 +268,212 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
             grid.get(x+1).get(y-1).flipOver();
             grid.get(x+1).get(y).flipOver();
             grid.get(x+1).get(y+1).flipOver();
+        }
+    }
+
+    private void doubleLeftClick(Square square) {
+        int x = square.getX();
+        int y = square.getY();
+        int count = 0;
+        if (x == 0) { //if clicked in first row
+            if (y == 0) { //if clicked in top left corner
+                if (grid.get(x).get(y+1).getState() == SquareState.FLAGGED) {
+                     count++;
+                }
+                if (grid.get(x+1).get(y).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x+1).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (count == square.getValue()){
+                    grid.get(x).get(y+1).flipOver();
+                    grid.get(x+1).get(y).flipOver();
+                    grid.get(x+1).get(y+1).flipOver();
+                }
+            }
+            else if (y == this.width-1) { //if clicked in top right corner
+                if (grid.get(x).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x+1).get(y).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x+1).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (count == square.getValue()) {
+                    grid.get(x).get(y - 1).flipOver();
+                    grid.get(x + 1).get(y).flipOver();
+                    grid.get(x + 1).get(y - 1).flipOver();
+                }
+            }
+            else { //if clicked on top edge
+                if (grid.get(x).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x+1).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x+1).get(y).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x+1).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (count == square.getValue()) {
+                    grid.get(x).get(y - 1).flipOver();
+                    grid.get(x).get(y + 1).flipOver();
+                    grid.get(x + 1).get(y - 1).flipOver();
+                    grid.get(x + 1).get(y).flipOver();
+                    grid.get(x + 1).get(y + 1).flipOver();
+                }
+            }
+        }
+        else if (x == this.height-1) { //if clicked in last row
+            if (y == 0) { //if clicked in bottom left corner
+                if (grid.get(x).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (count == square.getValue()) {
+                    grid.get(x).get(y + 1).flipOver();
+                    grid.get(x - 1).get(y).flipOver();
+                    grid.get(x - 1).get(y + 1).flipOver();
+                }
+            }
+            else if (y == this.width-1) { //if clicked in bottom right corner
+                if (grid.get(x).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (count == square.getValue()) {
+                    grid.get(x).get(y - 1).flipOver();
+                    grid.get(x - 1).get(y).flipOver();
+                    grid.get(x - 1).get(y - 1).flipOver();
+                }
+            }
+            else { //if clicked on bottom edge
+                if (grid.get(x).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y-1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (grid.get(x-1).get(y+1).getState() == SquareState.FLAGGED) {
+                    count++;
+                }
+                if (count == square.getValue()) {
+                    grid.get(x).get(y - 1).flipOver();
+                    grid.get(x).get(y + 1).flipOver();
+                    grid.get(x - 1).get(y - 1).flipOver();
+                    grid.get(x - 1).get(y).flipOver();
+                    grid.get(x - 1).get(y + 1).flipOver();
+                }
+            }
+        }
+        else if (y == 0) { //if clicked on left side
+            if (grid.get(x-1).get(y).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x-1).get(y+1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x).get(y+1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y+1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (count == square.getValue()) {
+                grid.get(x - 1).get(y).flipOver();
+                grid.get(x - 1).get(y + 1).flipOver();
+                grid.get(x).get(y + 1).flipOver();
+                grid.get(x + 1).get(y).flipOver();
+                grid.get(x + 1).get(y + 1).flipOver();
+            }
+        }
+        else if (y == this.width-1) { //if clicked on right side
+            if (grid.get(x-1).get(y-1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x-1).get(y).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x).get(y-1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y-1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (count == square.getValue()) {
+                grid.get(x - 1).get(y - 1).flipOver();
+                grid.get(x - 1).get(y).flipOver();
+                grid.get(x).get(y - 1).flipOver();
+                grid.get(x + 1).get(y - 1).flipOver();
+                grid.get(x + 1).get(y).flipOver();
+            }
+        }
+        else { //if clicked in middle
+            if (grid.get(x-1).get(y-1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x-1).get(y).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x-1).get(y+1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x).get(y-1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x).get(y+1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y-1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (grid.get(x+1).get(y+1).getState() == SquareState.FLAGGED) {
+                count++;
+            }
+            if (count == square.getValue()) {
+                grid.get(x - 1).get(y - 1).flipOver();
+                grid.get(x - 1).get(y).flipOver();
+                grid.get(x - 1).get(y + 1).flipOver();
+                grid.get(x).get(y - 1).flipOver();
+                grid.get(x).get(y + 1).flipOver();
+                grid.get(x + 1).get(y - 1).flipOver();
+                grid.get(x + 1).get(y).flipOver();
+                grid.get(x + 1).get(y + 1).flipOver();
+            }
         }
     }
 
