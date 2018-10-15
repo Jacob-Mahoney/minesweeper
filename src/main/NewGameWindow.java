@@ -1,23 +1,17 @@
 package main;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
 
-class NewGameWindow extends JFrame {
-
-    private Point test;
+class NewGameWindow extends BaseWindowFrame {
 
     NewGameWindow() {
-        super();
-        initComponents();
-        setResizable(false);
-        setVisible(true);
+
     }
 
-    private void initComponents() {
+    JPanel mainContent() {
 
         CustomRadioButton beginnerButton = new CustomRadioButton(ResourceHandler.beginner, ResourceHandler.beginnerH, ResourceHandler.beginnerI, 150, 50);
         CustomRadioButton intermediateButton = new CustomRadioButton(ResourceHandler.intermediate, ResourceHandler.intermediateH, ResourceHandler.intermediateI, 150, 50);
@@ -29,35 +23,6 @@ class NewGameWindow extends JFrame {
         group.add(advancedButton);
 
         beginnerButton.setSelected(true);
-
-        Color bg = new Color(36, 34, 38);
-
-        JPanel top = new JPanel();
-        BoxLayout boxLayout = new BoxLayout(top, BoxLayout.X_AXIS);
-        top.setLayout(boxLayout);
-
-        JLabel title = new JLabel("Minesweeper");
-        title.setForeground(Color.WHITE);
-        title.setBorder(new EmptyBorder(0, 10, 0, 0));
-        top.add(title);
-
-        top.setMinimumSize(new Dimension(450, 30));
-        top.setPreferredSize(new Dimension(450, 30));
-        top.setMaximumSize(new Dimension(450, 30));
-        top.setBackground(new Color(25, 24, 26));
-
-        top.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                pressed(e);
-            }
-        });
-        top.addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                dragged(e);
-            }
-        });
 
         LinkedList<JTextField> textFields = new LinkedList<JTextField>();
         textFields.add(new JTextField());
@@ -119,16 +84,10 @@ class NewGameWindow extends JFrame {
             label.setHorizontalAlignment(SwingConstants.CENTER);
         }
 
-        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // end program when this frame is closed
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        getContentPane().setBackground(bg);
-
-        // hand-coded grouplayout stuff
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        JPanel mainContent = new JPanel();
+        GroupLayout layout = new GroupLayout(mainContent);
+        mainContent.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup()
-            .addComponent(top)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(beginnerButton)
                 .addComponent(intermediateButton)
@@ -150,7 +109,6 @@ class NewGameWindow extends JFrame {
                     .addComponent(textFields.get(2))))
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
-            .addComponent(top)
             .addGroup(layout.createParallelGroup()
                 .addComponent(beginnerButton)
                 .addComponent(intermediateButton)
@@ -167,19 +125,8 @@ class NewGameWindow extends JFrame {
             .addGap(20)
         );
 
-        pack();
+        return mainContent;
 
-    }
-
-    private void pressed(MouseEvent e) {
-        test = e.getPoint();
-    }
-
-    private void dragged(MouseEvent e) {
-        Point current = e.getLocationOnScreen();
-        int x = current.x - test.x;
-        int y = current.y - test.y;
-        setLocation(x, y);
     }
 
 }

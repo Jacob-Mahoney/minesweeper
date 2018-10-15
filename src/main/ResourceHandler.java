@@ -11,6 +11,7 @@ class ResourceHandler {
     static ImageIcon beginner, intermediate, advanced;
     static ImageIcon beginnerH, intermediateH, advancedH;
     static ImageIcon beginnerI, intermediateI, advancedI;
+    static ImageIcon xButton, xButtonHover;
 
     private ResourceHandler() {
 
@@ -41,6 +42,8 @@ class ResourceHandler {
             beginnerI = getImageIconFromResource("../resources/beg i.jpg");
             intermediateI = getImageIconFromResource("../resources/int i.jpg");
             advancedI = getImageIconFromResource("../resources/adv i.jpg");
+            xButton = getImageIconFromResource("../resources/x-button.png");
+            xButtonHover = getImageIconFromResource("../resources/x-button-hover.png");
             return true;
         } catch (IOException e) {
             return false;
