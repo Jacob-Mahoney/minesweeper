@@ -10,14 +10,10 @@ abstract class BaseWindowFrame extends JFrame {
     private Point dragPoint;
 
     BaseWindowFrame() {
-        super();
-        initComponents();
-        setResizable(false);
-        setVisible(true);
         dragPoint = null;
     }
 
-    private void initComponents() {
+    void renderFrame() {
 
         Color bg = new Color(36, 34, 38);
 
@@ -41,6 +37,9 @@ abstract class BaseWindowFrame extends JFrame {
         );
 
         pack();
+
+        setResizable(false);
+        setVisible(true);
 
     }
 

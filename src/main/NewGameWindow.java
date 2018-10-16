@@ -8,7 +8,7 @@ import java.util.LinkedList;
 class NewGameWindow extends BaseWindowFrame {
 
     NewGameWindow() {
-
+        renderFrame();
     }
 
     JPanel mainContent() {
