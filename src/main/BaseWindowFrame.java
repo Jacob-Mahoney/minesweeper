@@ -17,9 +17,10 @@ abstract class BaseWindowFrame extends JFrame {
 
         Color bg = new Color(36, 34, 38);
 
-        JPanel top = initTopPanel();
         JPanel mainContent = mainContent();
         mainContent.setBackground(bg);
+
+        JPanel top = initTopPanel(mainContent.getPreferredSize().width);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -45,26 +46,30 @@ abstract class BaseWindowFrame extends JFrame {
 
     abstract JPanel mainContent();
 
-    private JPanel initTopPanel() {
+    private JPanel initTopPanel(int frameWidth) {
 
         JPanel top = new JPanel();
         GroupLayout layout = new GroupLayout(top);
         top.setLayout(layout);
 
-        top = Utility.setComponentSize(top, 450, 30);
+        top = Utility.setComponentSize(top, frameWidth, 30);
         top.setBackground(new Color(25, 24, 26));
 
         JLabel title = new JLabel("Minesweeper");
-        title = Utility.setComponentSize(title, null, 30);
+        title = Utility.setComponentSize(title, 77, 30);
         title.setVerticalAlignment(SwingConstants.CENTER);
         title.setForeground(Color.WHITE);
 
+        int blah = frameWidth - 30;
+        int gap = blah - 87;
+
         CustomButton xButton = new CustomButton(ResourceHandler.xButton, 30, 30);
+        xButton.setHoverIcon(ResourceHandler.xButtonHover);
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGap(10)
             .addComponent(title)
-            .addGap(10)
+            .addGap(gap)
             .addComponent(xButton)
         );
         layout.setVerticalGroup(layout.createParallelGroup()

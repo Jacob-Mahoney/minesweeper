@@ -18,10 +18,7 @@ class GameWindow extends BaseWindowFrame {
 
         JPanel grid = new JPanel();
         JLabel timer = new JLabel("timer");
-
-        if (gameGrid == null) {
-            System.out.println("asdf");
-        }
+        timer.setForeground(Color.WHITE);
 
         GridLayout gridLayout = new GridLayout(gameGrid.getWidth(), gameGrid.getHeight());
         int numberOfSquares = gameGrid.getWidth() * gameGrid.getHeight();
