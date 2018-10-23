@@ -3,7 +3,7 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
-public class Utility {
+class Utility {
 
     private Utility() {
 
@@ -23,8 +23,18 @@ public class Utility {
         comp.setMinimumSize(new Dimension(width, height));
         comp.setPreferredSize(new Dimension(width, height));
         comp.setMaximumSize(new Dimension(width, height));
+
         return comp;
 
+    }
+
+    static boolean isInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 
 class GameWindow extends BaseWindowFrame {
 
@@ -17,8 +18,6 @@ class GameWindow extends BaseWindowFrame {
         Color color = new Color(35, 35, 35);
 
         JPanel grid = new JPanel();
-        JLabel timer = new JLabel("timer");
-        timer.setForeground(Color.WHITE);
 
         GridLayout gridLayout = new GridLayout(gameGrid.getWidth(), gameGrid.getHeight());
         int numberOfSquares = gameGrid.getWidth() * gameGrid.getHeight();
@@ -34,24 +33,27 @@ class GameWindow extends BaseWindowFrame {
             grid.add(button);
         }
 
+        JLabel timer = new JLabel("0:00");
+        timer.setForeground(Color.WHITE);
+        timer = Utility.setComponentSize(timer, grid.getPreferredSize().width, null);
+        timer.setHorizontalAlignment(SwingConstants.CENTER);
+
         JPanel mainContent = new JPanel();
         GroupLayout layout = new GroupLayout(mainContent);
         mainContent.setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup()
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25)
-                .addGroup(layout.createParallelGroup()
-                    .addComponent(timer)
-                    .addComponent(grid))
-                .addGap(25))
-        );
-        layout.setVerticalGroup(layout.createParallelGroup()
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20)
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGap(10)
+            .addGroup(layout.createParallelGroup()
                 .addComponent(timer)
-                .addGap(15)
-                .addComponent(grid)
-                .addGap(25))
+                .addComponent(grid))
+            .addGap(10)
+        );
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGap(10)
+            .addComponent(timer)
+            .addGap(10)
+            .addComponent(grid)
+            .addGap(10)
         );
 
         return mainContent;
