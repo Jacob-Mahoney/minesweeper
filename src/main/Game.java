@@ -2,13 +2,15 @@ package main;
 
 public class Game implements Subscriber<Event> {
 
-    Game(int width, int height, int numberOfMines) {
+    private GameWindow gameWindow;
 
+    Game(int width, int height, int numberOfMines) {
         GameGrid grid = new GameGrid(width, height, numberOfMines);
         grid.addSubscriber(this);
-        GameWindow window = new GameWindow(grid);
-
+        gameWindow = new GameWindow(grid);
     }
+
+    GameWindow getGameWindow() { return gameWindow; }
 
     public void onUpdated(Publisher<Event> pub, Event event) {
         if (event.getType() == EventType.GAME_WON) {
@@ -19,10 +21,12 @@ public class Game implements Subscriber<Event> {
     }
 
     private void gameOver() {
+        WindowHandler.newGameWindow();
         System.out.println("game over!");
     }
 
     private void gameWon() {
+        WindowHandler.newGameWindow();
         System.out.println("game won!");
     }
 

@@ -154,7 +154,10 @@ class NewGameWindow extends BaseWindowFrame {
         });
 
         startButton.addActionListener((ActionEvent e) -> {
-            System.out.println("start game!");
+            int width = Integer.parseInt(widthTextField.getText());
+            int height = Integer.parseInt(heightTextField.getText());
+            int mines = Integer.parseInt(minesTextField.getText());
+            WindowHandler.newGame(width, height, mines);
         });
 
     }
