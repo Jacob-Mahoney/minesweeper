@@ -1,109 +1,41 @@
 package main;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
 
-class NewGameWindow extends JFrame {
+class NewGameWindow extends BaseWindowFrame {
 
-    private Point test;
+    private ButtonGroup difficultyButtonGroup;
+    private CustomRadioButton beginnerButton, intermediateButton, advancedButton;
+    private IntegerTextField widthTextField, heightTextField, minesTextField;
+    private CustomButton startButton;
 
     NewGameWindow() {
-        super();
-        initComponents();
-        setResizable(false);
-        setVisible(true);
+        renderFrame();
     }
 
-    private void initComponents() {
+    JPanel mainContent() {
 
-        CustomRadioButton beginnerButton = new CustomRadioButton(ResourceHandler.beginner, ResourceHandler.beginnerH, ResourceHandler.beginnerI, 150, 50);
-        CustomRadioButton intermediateButton = new CustomRadioButton(ResourceHandler.intermediate, ResourceHandler.intermediateH, ResourceHandler.intermediateI, 150, 50);
-        CustomRadioButton advancedButton = new CustomRadioButton(ResourceHandler.advanced, ResourceHandler.advancedH, ResourceHandler.advancedI, 150, 50);
+        beginnerButton = new CustomRadioButton(ResourceHandler.beginner, ResourceHandler.beginnerH, ResourceHandler.beginnerI, 150, 50);
+        intermediateButton = new CustomRadioButton(ResourceHandler.intermediate, ResourceHandler.intermediateH, ResourceHandler.intermediateI, 150, 50);
+        advancedButton = new CustomRadioButton(ResourceHandler.advanced, ResourceHandler.advancedH, ResourceHandler.advancedI, 150, 50);
 
-        ButtonGroup group = new ButtonGroup();
-        group.add(beginnerButton);
-        group.add(intermediateButton);
-        group.add(advancedButton);
+        difficultyButtonGroup = new ButtonGroup();
+        difficultyButtonGroup.add(beginnerButton);
+        difficultyButtonGroup.add(intermediateButton);
+        difficultyButtonGroup.add(advancedButton);
 
         beginnerButton.setSelected(true);
 
-        Color bg = new Color(36, 34, 38);
+        widthTextField = new IntegerTextField(100, 30, 6, 16);
+        heightTextField = new IntegerTextField(100, 30, 6, 30);
+        minesTextField = new IntegerTextField(100, 30, 5, 99);
 
-        JPanel top = new JPanel();
-        BoxLayout boxLayout = new BoxLayout(top, BoxLayout.X_AXIS);
-        top.setLayout(boxLayout);
-
-        JLabel title = new JLabel("Minesweeper");
-        title.setForeground(Color.WHITE);
-        title.setBorder(new EmptyBorder(0, 10, 0, 0));
-        top.add(title);
-
-        top.setMinimumSize(new Dimension(450, 30));
-        top.setPreferredSize(new Dimension(450, 30));
-        top.setMaximumSize(new Dimension(450, 30));
-        top.setBackground(new Color(25, 24, 26));
-
-        top.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                pressed(e);
-            }
-        });
-        top.addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                dragged(e);
-            }
-        });
-
-        LinkedList<JTextField> textFields = new LinkedList<JTextField>();
-        textFields.add(new JTextField());
-        textFields.add(new JTextField());
-        textFields.add(new JTextField());
-
-        for (JTextField textField : textFields) {
-            textField.setBorder(null);
-            textField.setMinimumSize(new Dimension(100, 30));
-            textField.setPreferredSize(new Dimension(100, 30));
-            textField.setMaximumSize(new Dimension(100, 30));
-            textField.setSize(new Dimension(100, 30));
-            textField.setBorder(BorderFactory.createCompoundBorder(textField.getBorder(), BorderFactory.createEmptyBorder(8, 8, 8, 8)));
-            textField.setBackground(new Color(60, 57, 64));
-            textField.setForeground(Color.WHITE);
-            textField.setCaretColor(Color.WHITE);
-            textField.setHorizontalAlignment(SwingConstants.CENTER);
-        }
-
-        textFields.get(0).setText("9");
-        textFields.get(1).setText("9");
-        textFields.get(2).setText("10");
-
-        beginnerButton.addItemListener((ItemEvent e) -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                textFields.get(0).setText("9");
-                textFields.get(1).setText("9");
-                textFields.get(2).setText("10");
-            }
-        });
-
-        intermediateButton.addItemListener((ItemEvent e) -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                textFields.get(0).setText("16");
-                textFields.get(1).setText("16");
-                textFields.get(2).setText("40");
-            }
-        });
-
-        advancedButton.addItemListener((ItemEvent e) -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                textFields.get(0).setText("16");
-                textFields.get(1).setText("30");
-                textFields.get(2).setText("99");
-            }
-        });
+        widthTextField.setText("9");
+        heightTextField.setText("9");
+        minesTextField.setText("10");
 
         LinkedList<JLabel> labels = new LinkedList<JLabel>();
         labels.add(new JLabel("width"));
@@ -112,23 +44,19 @@ class NewGameWindow extends JFrame {
 
         for (JLabel label : labels) {
             label.setForeground(Color.WHITE);
-            label.setMinimumSize(new Dimension(100, 30));
-            label.setPreferredSize(new Dimension(100, 30));
-            label.setMaximumSize(new Dimension(100, 30));
-            label.setSize(new Dimension(100, 30));
+            label = Utility.setComponentSize(label, 100, 30);
             label.setHorizontalAlignment(SwingConstants.CENTER);
         }
 
-        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // end program when this frame is closed
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        getContentPane().setBackground(bg);
+        startButton = new CustomButton(ResourceHandler.start, 450, 50);
+        startButton.setHoverIcon(ResourceHandler.startH);
 
-        // hand-coded grouplayout stuff
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        setupListeners();
+
+        JPanel mainContent = new JPanel();
+        GroupLayout layout = new GroupLayout(mainContent);
+        mainContent.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup()
-            .addComponent(top)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(beginnerButton)
                 .addComponent(intermediateButton)
@@ -137,49 +65,113 @@ class NewGameWindow extends JFrame {
                 .addGap(175)
                 .addGroup(layout.createParallelGroup()
                     .addComponent(labels.get(0))
-                    .addComponent(textFields.get(0))))
+                    .addComponent(widthTextField)))
             .addGroup(layout.createSequentialGroup()
                 .addGap(175)
                 .addGroup(layout.createParallelGroup()
                     .addComponent(labels.get(1))
-                    .addComponent(textFields.get(1))))
+                    .addComponent(heightTextField)))
             .addGroup(layout.createSequentialGroup()
                 .addGap(175)
                 .addGroup(layout.createParallelGroup()
                     .addComponent(labels.get(2))
-                    .addComponent(textFields.get(2))))
+                    .addComponent(minesTextField)))
+            .addComponent(startButton)
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
-            .addComponent(top)
             .addGroup(layout.createParallelGroup()
                 .addComponent(beginnerButton)
                 .addComponent(intermediateButton)
                 .addComponent(advancedButton))
             .addGap(10)
             .addComponent(labels.get(0))
-            .addComponent(textFields.get(0))
+            .addComponent(widthTextField)
             .addGap(10)
             .addComponent(labels.get(1))
-            .addComponent(textFields.get(1))
+            .addComponent(heightTextField)
             .addGap(10)
             .addComponent(labels.get(2))
-            .addComponent(textFields.get(2))
-            .addGap(20)
+            .addComponent(minesTextField)
+            .addGap(30)
+            .addComponent(startButton)
         );
 
-        pack();
+        return mainContent;
 
     }
 
-    private void pressed(MouseEvent e) {
-        test = e.getPoint();
+    private void setupListeners() {
+
+        widthTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) { }
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldMatchCheck();
+            }
+        });
+
+        heightTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) { }
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldMatchCheck();
+            }
+        });
+
+        minesTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) { }
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldMatchCheck();
+            }
+        });
+
+        beginnerButton.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                widthTextField.setText("9");
+                heightTextField.setText("9");
+                minesTextField.setText("10");
+            }
+        });
+
+        intermediateButton.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                widthTextField.setText("16");
+                heightTextField.setText("16");
+                minesTextField.setText("40");
+            }
+        });
+
+        advancedButton.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                widthTextField.setText("16");
+                heightTextField.setText("30");
+                minesTextField.setText("99");
+            }
+        });
+
+        startButton.addActionListener((ActionEvent e) -> {
+            int width = Integer.parseInt(widthTextField.getText());
+            int height = Integer.parseInt(heightTextField.getText());
+            int mines = Integer.parseInt(minesTextField.getText());
+            WindowHandler.newGame(width, height, mines);
+        });
+
     }
 
-    private void dragged(MouseEvent e) {
-        Point current = e.getLocationOnScreen();
-        int x = current.x - test.x;
-        int y = current.y - test.y;
-        setLocation(x, y);
+    private void textFieldMatchCheck() {
+        if (widthTextField.getText().equals("9") && heightTextField.getText().equals("9") && minesTextField.getText().equals("10")) {
+            beginnerButton.setSelected(true);
+        } else if (widthTextField.getText().equals("16") && heightTextField.getText().equals("16") && minesTextField.getText().equals("40")) {
+            intermediateButton.setSelected(true);
+        } else if (widthTextField.getText().equals("16") && heightTextField.getText().equals("30") && minesTextField.getText().equals("99")) {
+            advancedButton.setSelected(true);
+        } else {
+            difficultyButtonGroup.clearSelection();
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,6 +18,10 @@ class CustomRadioButton extends JRadioButton {
         this.width = width;
         this.height = height;
         init();
+    }
+
+    void resetIcon() {
+        setIcon(iconNormal);
     }
 
     private void init() {
@@ -43,6 +48,12 @@ class CustomRadioButton extends JRadioButton {
             public void mouseExited(MouseEvent e) {
                 if (!isSelected())
                     setIcon(iconNormal);
+            }
+        });
+
+        addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                resetIcon();
             }
         });
 

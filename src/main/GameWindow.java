@@ -3,26 +3,20 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameWindow extends JFrame {
+class GameWindow extends BaseWindowFrame {
 
-    private JPanel grid;
-    private JLabel timer;
     private GameGrid gameGrid;
 
-    public GameWindow(GameGrid gameGrid) {
-        super("Poop");
+    GameWindow(GameGrid gameGrid) {
         this.gameGrid = gameGrid;
-        initComponents();
-        setResizable(false);
-        setVisible(true);
+        renderFrame();
     }
 
-    private void initComponents() {
+    JPanel mainContent() {
 
         Color color = new Color(35, 35, 35);
 
-        grid = new JPanel();
-        timer = new JLabel("timer");
+        JPanel grid = new JPanel();
 
         GridLayout gridLayout = new GridLayout(gameGrid.getWidth(), gameGrid.getHeight());
         int numberOfSquares = gameGrid.getWidth() * gameGrid.getHeight();
@@ -33,39 +27,35 @@ public class GameWindow extends JFrame {
         grid.setBackground(color);
 
         for (int i = 0; i < numberOfSquares; i++) {
-
             Square square = gameGrid.getSquareByNumber(i);
             JButton button = square.getButton();
-
             grid.add(button);
-
         }
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // end program when this frame is closed
+        JLabel timer = new JLabel("0:00");
+        timer.setForeground(Color.WHITE);
+        timer = Utility.setComponentSize(timer, grid.getPreferredSize().width, null);
+        timer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        getContentPane().setBackground(color);
-
-        // hand-coded grouplayout stuff
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup()
-                .addGroup(layout.createSequentialGroup()
-                        .addGap(25)
-                        .addGroup(layout.createParallelGroup()
-                                .addComponent(timer)
-                                .addComponent(grid))
-                        .addGap(25))
+        JPanel mainContent = new JPanel();
+        GroupLayout layout = new GroupLayout(mainContent);
+        mainContent.setLayout(layout);
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGap(10)
+            .addGroup(layout.createParallelGroup()
+                .addComponent(timer)
+                .addComponent(grid))
+            .addGap(10)
         );
-        layout.setVerticalGroup(layout.createParallelGroup()
-                .addGroup(layout.createSequentialGroup()
-                        .addGap(20)
-                        .addComponent(timer)
-                        .addGap(15)
-                        .addComponent(grid)
-                        .addGap(25))
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGap(10)
+            .addComponent(timer)
+            .addGap(10)
+            .addComponent(grid)
+            .addGap(10)
         );
 
-        pack();
+        return mainContent;
 
     }
 
