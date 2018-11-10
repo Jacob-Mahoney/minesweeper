@@ -43,15 +43,15 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
     }
 
     Square getSquareByNumber(int number) {
-        int x = number / this.height;
-        int y = number % this.height;
+        int x = number / this.width;
+        int y = number % this.width;
         return grid.get(x).get(y);
     }
 
     private void init() {
-        for (int i = 0; i < this.height; i++) {
+        for (int i = 0; i < this.height; i++) { // for each row
             ArrayList<Square> row = new ArrayList<Square>();
-            for (int j = 0; j < this.width; j++) {
+            for (int j = 0; j < this.width; j++) { // for each column in row
                 Square s = new Square(i, j);
                 s.addSubscriber(this);
                 row.add(s);
@@ -137,8 +137,8 @@ public class GameGrid extends Publisher<Event> implements Subscriber<Event> {
 
             do {
                 random = (int) (Math.random() * (this.height) * (this.width));
-                x = random / this.height;
-                y = random % this.height;
+                x = random / this.width;
+                y = random % this.width;
             } while (grid.get(x).get(y).hasMine() || safeZoneCheck(square, grid.get(x).get(y)));
 
             grid.get(x).get(y).setHasMine(true); //set mine

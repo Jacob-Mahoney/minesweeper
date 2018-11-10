@@ -29,9 +29,9 @@ class NewGameWindow extends BaseWindowFrame {
 
         beginnerButton.setSelected(true);
 
-        widthTextField = new IntegerTextField(100, 30, 6, 16);
-        heightTextField = new IntegerTextField(100, 30, 6, 30);
-        minesTextField = new IntegerTextField(100, 30, 5, 99);
+        widthTextField = new IntegerTextField(100, 30, 0, 16);
+        heightTextField = new IntegerTextField(100, 30, 0, 30);
+        minesTextField = new IntegerTextField(100, 30, 0, 99);
 
         widthTextField.setText("9");
         heightTextField.setText("9");

@@ -18,7 +18,7 @@ class GameWindow extends BaseWindowFrame {
 
         JPanel grid = new JPanel();
 
-        GridLayout gridLayout = new GridLayout(gameGrid.getWidth(), gameGrid.getHeight());
+        GridLayout gridLayout = new GridLayout(gameGrid.getHeight(), gameGrid.getWidth());
         int numberOfSquares = gameGrid.getWidth() * gameGrid.getHeight();
 
         grid.setLayout(gridLayout);
